@@ -118,3 +118,9 @@
         clear: both;
     }
 }
+
+@mixin multi-shadow($value1, $value2, $value3) {
+    -webkit-box-shadow: $value1, $value2, $value3;
+    -moz-box-shadow: $value1, $value2, $value3;
+    box-shadow: $value1, $value2, $value3;
+}
