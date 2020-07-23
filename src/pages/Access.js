@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button} from "primereact/button";
-import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 
 export default class Access extends Component {
 
@@ -14,7 +13,7 @@ export default class Access extends Component {
 				<div className="exception-detail">
 
 					<div className="exception-icon">
-						<VerifiedUserOutlinedIcon fontSize="large" />
+						<i className="pi pi-exclamation-triangle" style={{'fontSize': '4.5em'}}></i>
 					</div>
 					<h1>ACCESS DENIED</h1>
 					<p>Please contact the system administrator</p>
