@@ -3,6 +3,7 @@ import { Route, withRouter } from 'react-router-dom';
 import App from "./App";
 import Login from "./pages/Login";
 import Access from './pages/Access';
+import Error from './pages/Error';
 
 class AppWrapper extends Component {
     componentDidUpdate(prevProps) {
@@ -17,6 +18,8 @@ class AppWrapper extends Component {
                 return <Route path="/login" component={Login} />
             case "/accessdenied":
                 return <Route path="/accessdenied" component={Access} />
+            case "/error":
+                return <Route path="/error" component={Error} />
             default:
                 return <App />;
         }

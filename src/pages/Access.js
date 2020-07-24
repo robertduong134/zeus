@@ -6,21 +6,14 @@ export default class Access extends Component {
 	render() {
 		return <div className="exception-body accessdenied">
 			<div className="exception-panel">
-				<div className="exception-code">
-					<img src="assets/layout/images/exception/401.svg" alt="sigma"/>
-				</div>
+				<div className="exception-content">
+					<img src="assets/layout/images/pages/icon-access.svg" alt="sigma"/>
+						<h1>Access Denied</h1>
+						<p>You do not have the necessary permissons.</p>
 
-				<div className="exception-detail">
-
-					<div className="exception-icon">
-						<i className="pi pi-exclamation-triangle" style={{'fontSize': '4.5em'}}></i>
-					</div>
-					<h1>ACCESS DENIED</h1>
-					<p>Please contact the system administrator</p>
-
-					<Button label="GO TO DASHBOARD" onClick={() => {window.location = "/#"}} />
+						<Button label="Go To Dashboard" onClick={() => {window.location = "/#"}} />
 				</div>
 			</div>
 		</div>
-    }
+	}
 }
