@@ -131,7 +131,6 @@ class App extends Component {
                 items: [
                     {label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty'},
                     { label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/login'},
-                    { label: 'Landing', icon: 'pi pi-fw pi-globe', command: ()=> window.open('assets/pages/landing.html', '_blank')},
                     { label: 'Error', icon: 'pi pi-fw pi-exclamation-triangle', to: '/error'},
                     { label: '404', icon: 'pi pi-fw pi-times', to: '/404'},
                     {
