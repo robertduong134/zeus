@@ -4,7 +4,6 @@ import {AppTopbar} from './AppTopbar';
 import {AppFooter} from './AppFooter';
 import {AppMenu} from './AppMenu';
 import {AppProfile} from './AppProfile';
-import {Route} from 'react-router-dom';
 import {Dashboard} from './components/Dashboard';
 import {FormsDemo} from './components/FormsDemo';
 import {SampleDemo} from './components/SampleDemo';
@@ -26,6 +25,7 @@ import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 import './layout/layout.scss';
 import './App.scss';
+import PrivateRoute from './components/PrivateRoute';
 
 class App extends Component {
 
@@ -243,18 +243,18 @@ class App extends Component {
                 </div>
 
                 <div className="layout-main">
-                    <Route path="/" exact component={Dashboard} />
-                    <Route path="/forms" component={FormsDemo} />
-                    <Route path="/sample" component={SampleDemo} />
-                    <Route path="/data" component={DataDemo} />
-                    <Route path="/panels" component={PanelsDemo} />
-                    <Route path="/overlays" component={OverlaysDemo} />
-                    <Route path="/menus" component={MenusDemo} />
-                    <Route path="/messages" component={MessagesDemo} />
-                    <Route path="/charts" component={ChartsDemo} />
-                    <Route path="/misc" component={MiscDemo} />
-                    <Route path="/empty" component={EmptyPage} />
-                    <Route path="/documentation" component={Documentation} />
+                    <PrivateRoute path="/" exact component={Dashboard} />
+                    <PrivateRoute path="/forms" component={FormsDemo} />
+                    <PrivateRoute path="/sample" component={SampleDemo} />
+                    <PrivateRoute path="/data" component={DataDemo} />
+                    <PrivateRoute path="/panels" component={PanelsDemo} />
+                    <PrivateRoute path="/overlays" component={OverlaysDemo} />
+                    <PrivateRoute path="/menus" component={MenusDemo} />
+                    <PrivateRoute path="/messages" component={MessagesDemo} />
+                    <PrivateRoute path="/charts" component={ChartsDemo} />
+                    <PrivateRoute path="/misc" component={MiscDemo} />
+                    <PrivateRoute path="/empty" component={EmptyPage} />
+                    <PrivateRoute path="/documentation" component={Documentation} />
                 </div>
 
                 <AppFooter />
