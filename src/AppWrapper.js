@@ -5,8 +5,10 @@ import Login from "./pages/Login";
 import Access from './pages/Access';
 import Error from './pages/Error';
 import NotFound from './pages/NotFound';
+import SignUp from './pages/SignUp';
 
 class AppWrapper extends Component {
+    
     componentDidUpdate(prevProps) {
         if (this.props.location !== prevProps.location) {
             window.scrollTo(0, 0)
@@ -17,6 +19,8 @@ class AppWrapper extends Component {
         switch (this.props.location.pathname) {
             case "/login":
                 return <Route path="/login" component={Login} />
+            case "/sign-up":
+                return <Route path="/sign-up" component={SignUp} />
             case "/accessdenied":
                 return <Route path="/accessdenied" component={Access} />
             case "/error":

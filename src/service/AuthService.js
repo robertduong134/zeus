@@ -1,17 +1,19 @@
 import axios from "axios";
+import jwtdecode from "jwt-decode";
 
-const API_URL = "http://localhost:8080/api/auth/";
+const API_URL = "http://localhost:8181/api/v1/auth/";
 
 class AuthService {
     login(username, password) {
         return axios
-            .post(API_URL + "signin", {
+            .post(API_URL + "login", {
                 username,
                 password
             })
             .then(response => {
                 if (response.data.accessToken) {
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                    this.logout();
+                    this.setToken(JSON.stringify(response.data));
                 }
 
                 return response.data;
@@ -23,7 +25,7 @@ class AuthService {
     }
 
     register(username, email, password) {
-        return axios.post(API_URL + "signup", {
+        return axios.post(API_URL + "register", {
             username,
             email,
             password
@@ -31,7 +33,36 @@ class AuthService {
     }
 
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));;
+        return jwtdecode(this.getToken());
+    }
+
+    isLogin() {
+        const token = this.getToken();
+        console.log(token);
+        return token && this.isTokenExpired(token);
+    }
+
+    isTokenExpired (token) {
+        try {
+            const decoded = jwtdecode(token.accessToken);
+            if (decoded.exp < Date.now() / 1000) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch (err) {
+            return false;
+        }
+    }
+
+    getToken () {
+        return JSON.parse(localStorage.getItem('token'));
+    }
+
+    setToken (token) {
+        localStorage.setItem("token", token);
     }
 }
 
