@@ -7,7 +7,6 @@ import { Button } from 'primereact/button';
 import { RadioButton } from 'primereact/radiobutton';
 import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
-import { useHistory } from 'react-router-dom';
 
 export default class SignUp extends Component {
 
@@ -23,13 +22,26 @@ export default class SignUp extends Component {
             val1: null,
             val2: null,
             val3: null,
-            checked: null
+            checked: null,
+            dropdownCustType: null,
+            dob: null,
+            idIssueDate: null,
+            idNo: null,
+            idIssuePlace: null,
+            phone: null
         }
-        // this.history = useHistory();
         this.createTimeSelect();
         this.createQuestionSelect();
+        this.createCustTypeSelect();
     }
 
+    createCustTypeSelect(){
+        this.dropdownCustTypes = [
+            {label: 'Chọn loại khách hàng', value: null },
+            {label: 'Khách hàng cá nhân', value: 'I'},
+            {label: 'Khách hàng doanh nghiệp', value: 'C'}
+        ]
+    }
 
     createTimeSelect() {
         this.dropdownOptions = [
@@ -88,54 +100,13 @@ export default class SignUp extends Component {
             ];
     }
 
-    setActiveTab(e){
-        this.setState({activeTab: e});
-    }
-
-    setDropdownTime(e){
-        this.setState({dropdownTime: e});
-    }
-
-    setActiveCard(e){
-        this.setState({activeCard: e});
-    }
-
-    setDate(e){
-        this.setState({date: e});
-    }
-
-    setDropdownHear(e){
-        this.setState({dropdownHear: e});
-    }
-
-    setGroup1(e){
-        this.setState({group1: e});
-    }
-
-    setVal1(e){
-        this.setState({val1: e});
-    }
-
-    setVal2(e){
-        this.setState({val2: e});
-    }
-
-    setVal3(e){
-        this.setState({val3: e});
-    }
-
-    setChecked(e){
-        this.setState({checked: e});
-    }
-    
-
     render() {
         return (
         <div className="wizard-body">
             <div className="wizard-wrapper">
                 <div className="wizard-header">
                     <div className="wizard-logo">
-                        <img src="assets/layout/images/logo-vetc.png" alt="babylon-layout" style={{cursor: 'pointer'}} onClick={() => this.state.history.push('/')}/>
+                        <img src="assets/layout/images/logo-vetc.png" alt="babylon-layout" style={{cursor: 'pointer'}}/>
                     </div>
                 </div>
 
@@ -168,17 +139,17 @@ export default class SignUp extends Component {
                             <div className="wizard-card-tabs">
                                 <div
                                     className={classNames("wizard-card-tab register-tab", { 'selected-tab': this.state.activeTab === 'register' })}
-                                    onClick={() => this.setActiveTab('register')}>
+                                    onClick={() => this.setState({activeTab: 'register'})}>
                                     ĐĂNG KÝ TÀI KHOẢN
                                 </div>
                                 <div
                                     className={classNames("wizard-card-tab tier-tab", { 'selected-tab': this.state.activeTab === 'tier' })}
-                                    onClick={() => this.setActiveTab('tier')}>
+                                    onClick={() => this.setState({activeTab: 'tier'})}>
                                     CHỌN SỐ TÀI KHOẢN
                                 </div>
                                 <div
                                     className={classNames("wizard-card-tab payment-tab", { 'selected-tab': this.state.activeTab === 'payment' })}
-                                    onClick={() => this.setActiveTab('payment')}>
+                                    onClick={() => this.setState({activeTab: 'payment'})}>
                                     NẠP TIỀN
                                 </div>
                             </div>
@@ -192,36 +163,51 @@ export default class SignUp extends Component {
                             </div>
                             <div className="wizard-forms-wrapper p-grid p-nogutter">
                                 <div className="p-col-12 p-md-6 wizard-forms">
-                                    <label htmlFor="name" className="form-label">Enter Username</label>
-                                    <InputText id="name" />
 
-                                    <label htmlFor="email" className="form-label">Enter Email</label>
-                                    <InputText id="email" />
+                                    <label htmlFor="custtype" className="form-label">Loại khách hàng</label>
+                                    <Dropdown id="custtype" style={{ marginBottom: '10px' }} 
+                                        options={this.dropdownCustTypes} value={this.state.dropdownCustType}
+                                        onChange={event => this.setState({dropdownCustType: event.value})} />
 
-                                    <label htmlFor="password" className="form-label">Enter Password</label>
-                                    <InputText id="password" type="password" />
+                                    <label htmlFor="name" className="form-label">Họ và tên</label>
+                                    <InputText id="name" onChange={(e) => this.setState({name: e.target.value})} />
+
+                                    <label htmlFor="dob" className="form-label">Ngày sinh</label>
+                                    <Calendar id="dob" value={this.state.dob} onChange={(e) => this.setState({ dob: e.value })} />
+
+                                    <label htmlFor="idNo" className="form-label">Số CMND/CCCD</label>
+                                    <InputText id="idNo" onChange={(e) => this.setState({idNo: e.target.value})}/>
+
+                                    <label htmlFor="idIssueDate" className="form-label">Ngày cấp CMND/CCCD</label>
+                                    <Calendar id="idIssueDate" value={this.state.dob} onChange={(e) => this.setState({ dob: e.value })} />
+
+                                    <label htmlFor="idIssuePlace" className="form-label">Nơi cấp CMND/CCCD</label>
+                                    <InputText id="idIssuePlace" onChange={(e) => this.setState({idIssuePlace: e.target.value})} />
                                 </div>
                                 <div className="p-col-12 p-md-6 wizard-forms">
+                                    <label htmlFor="phone" className="form-label">Số điện thoại</label>
+                                    <InputText id="phone" onChange={(e) => this.setState({phone: e.target.value})}/>
+
                                     <label htmlFor="timezone" className="form-label">Select Timezone</label>
                                     <Dropdown id="timezone" style={{ marginBottom: '10px' }}
                                         options={this.dropdownOptions} value={this.state.dropdownTime}
-                                        onChange={event => this.setDropdownTime(event.value)} />
+                                        onChange={event => this.setState({dropdownTime: event.value})} />
 
                                     <div className="calendar">
                                         <label htmlFor="birthdate" className="form-label"></label>
                                         <Calendar id="birthdate" appendTo={document.body} value={this.state.date}
-                                            onChange={(e) => this.setDate(e.value)} />
+                                            onChange={(e) => this.setState({date: e.value})} />
                                     </div>
 
                                     <label htmlFor="babylon" className="form-label">Where did you hear
                                         Babylon?</label>
                                     <Dropdown id="babylon" appendTo={document.body} style={{ marginBottom: '10px' }}
                                         options={this.dropdownOptions2} value={this.state.dropdownHear}
-                                        onChange={event => this.setDropdownHear(event.value)} />
+                                        onChange={event => this.setState({dropdownHear: event.value})} />
                                 </div>
                                 <div className="wizard-button">
-                                    <Button className="continue-button" label="CONTINUE"
-                                        onClick={() => this.setActiveTab('tier')} />
+                                    <Button className="continue-button" label="TIẾP TỤC"
+                                        onClick={() => this.setState({activeTab: 'tier'})} />
                                 </div>
                             </div>
                         </div>
@@ -232,7 +218,7 @@ export default class SignUp extends Component {
                                 <div className="p-col-12 p-md-4">
                                     <div
                                         className={classNames("wizard-tier-card beginner", { 'active-tier-card': this.state.activeCard === 'basic' })}
-                                        onClick={() => this.setActiveCard('basic')}>
+                                        onClick={() => this.setState({activeCard: 'basic'})}>
                                         <div className="wizard-tier-card-header">
                                             <img src="assets/layout/images/extensions/asset-beginner.png"
                                                 alt="babylon-layout" />
@@ -267,7 +253,7 @@ export default class SignUp extends Component {
                                 <div className="p-col-12 p-md-4">
                                     <div
                                         className={classNames("wizard-tier-card professional", { 'active-tier-card': this.state.activeCard === 'professional' })}
-                                        onClick={() => this.setActiveCard('professional')}>
+                                        onClick={() => this.setState({activeCard: 'professional'})}>
                                         <div className="wizard-tier-card-header">
                                             <img src="assets/layout/images/extensions/asset-pro.png"
                                                 alt="babylon-layout" />
@@ -302,7 +288,7 @@ export default class SignUp extends Component {
                                 <div className="p-col-12 p-md-4">
                                     <div
                                         className={classNames("wizard-tier-card enterprise", { 'active-tier-card': this.state.activeCard === 'enterprise' })}
-                                        onClick={() => this.setActiveCard('enterprise')}>
+                                        onClick={() => this.setState({activeCard: 'enterprise'})}>
                                         <div className="wizard-tier-card-header">
                                             <img src="assets/layout/images/extensions/asset-enterprise.png"
                                                 alt="babylon-layout" />
@@ -336,8 +322,8 @@ export default class SignUp extends Component {
                             </div>
 
                             <div className="wizard-button">
-                                <Button className="continue-button" label="CONTINUE"
-                                    onClick={() => this.setActiveTab('payment')} />
+                                <Button className="continue-button" label="TIẾP TỤC"
+                                    onClick={() => this.setState({activeTab: 'payment'})} />
                             </div>
                         </div>
 
@@ -348,7 +334,7 @@ export default class SignUp extends Component {
                                     <div className="customPanel p-grid p-nogutter">
                                         <div className="p-col-1 p-lg-1 p-md-1" style={{ lineHeight: '2em' }}>
                                             <RadioButton inputId="credit" name="group1" value="Credit"
-                                                onChange={(e) => this.setGroup1(e.value)}
+                                                onChange={(e) => this.setState({group1: e.value})}
                                                 checked={this.state.group1 === 'Credit'} />
                                         </div>
                                         <div className="p-col-11 p-lg-5 p-md-5">
@@ -363,7 +349,7 @@ export default class SignUp extends Component {
                                         </div>
                                         <div className="p-col-1 p-lg-1 p-md-1" style={{ lineHeight: '2em' }}>
                                             <RadioButton inputId="paypal" name="group1" value="Paypal"
-                                                onChange={(e) => this.setGroup1(e.value)}
+                                                onChange={(e) => this.setState({group1: e.value})}
                                                 checked={this.state.group1 === 'Paypal'} />
                                         </div>
                                         <div className="p-col-11 p-lg-5 p-md-5">
@@ -382,23 +368,23 @@ export default class SignUp extends Component {
                                             <label htmlFor="number" className="form-label">Cardholder Number</label>
                                             <InputMask id="number" mask="9999-9999-9999-9999"
                                                 value={this.state.val1}
-                                                onChange={(e) => this.setVal1(e.value)} />
+                                                onChange={(e) => this.setState({val1: e.value})} />
                                         </div>
                                         <div className="p-col-6 p-md-3">
                                             <label htmlFor="date" className="form-label">Date</label>
                                             <InputMask id="date" mask="99/99" value={this.state.val2}
-                                                onChange={(e) => this.setVal2(e.value)} />
+                                                onChange={(e) => this.setState({val2: e.value})} />
                                         </div>
                                         <div className="p-col-6 p-md-3">
                                             <label htmlFor="ccv" className="form-label">CCV</label>
                                             <InputMask id="ccv" mask="999" value={this.state.val3}
-                                                onChange={(e) => this.setVal3(e.value)} />
+                                                onChange={(e) => this.setState({val3: e.value})} />
                                         </div>
                                     </div>
 
                                     <div style={{ marginTop: '24px' }}>
                                         <Checkbox inputId="cb1" checked={this.state.checked}
-                                            onChange={e => this.setChecked(e.checked)} />
+                                            onChange={e => this.setState({checked: e.checked})} />
                                         <label htmlFor="cb1" className="p-checkbox-label p-ml-2">Save credit card
                                             information for future usage</label>
                                     </div>
