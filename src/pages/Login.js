@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
-import {Growl} from 'primereact/growl';
+import { Toast } from 'primereact/toast';
 import { Form } from "reactstrap";
 import AuthService from "../service/AuthService";
-
+import logo from "../layout/images/logo.svg"
 
 export default class Login extends Component {
 
@@ -80,13 +80,13 @@ export default class Login extends Component {
     render() {
         return (
             <div className="login-body">
-                <Growl ref={(el) => this.growl = el} />
+                <Toast ref={(el) => this.growl = el} />
                 <div className="card login-panel ui-fluid">
                     <div className="login-panel-content">
                         <div className="p-grid">
                             <Form onSubmit={this.handleLogin} >
                                 <div className="p-col-12 p-sm-6 p-md-6 logo-container">
-                                    <img src="assets/layout/images/logo.svg" alt="sigma" />
+                                    <img src={logo} alt="sigma" />
                                     <span className="guest-sign-in">Welcome, please use the form to sign-in VETC network</span>
                                 </div>
                                 <div className="p-col-12 username-container">

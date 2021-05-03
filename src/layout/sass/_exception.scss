@@ -4,7 +4,7 @@
     $borderColor: transparent;
 
     &.error {
-        background: url("/assets/layout/images/pages/error-bg.jpg");
+        background: url("../images/pages/error-bg.jpg");
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -14,7 +14,7 @@
     }
 
     &.notfound {
-        background: url("/assets/layout/images/pages/notfound-bg.jpg");
+        background: url("../images/pages/notfound-bg.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: bottom;
@@ -25,7 +25,7 @@
     }
 
     &.accessdenied {
-        background: url("/assets/layout/images/pages/accessdenied-bg.jpg");
+        background: url("../images/pages/accessdenied-bg.jpg");
         background-repeat: no-repeat;
         background-size: cover;
 

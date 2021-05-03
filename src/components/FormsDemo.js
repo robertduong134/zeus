@@ -11,7 +11,7 @@ import {RadioButton} from 'primereact/radiobutton';
 import {InputSwitch} from 'primereact/inputswitch';
 import {Dropdown} from 'primereact/dropdown';
 import {Password} from 'primereact/password';
-import {Spinner} from 'primereact/spinner';
+import { InputNumber } from 'primereact/inputnumber';
 import {Slider} from 'primereact/components/slider/Slider';
 import {ListBox} from 'primereact/listbox';
 import {Rating} from 'primereact/rating';
@@ -289,7 +289,7 @@ export class FormsDemo extends Component {
             
                     <div className="card card-w-title">
                         <h1>Spinner</h1>
-                        <Spinner value={this.state.spinnerValue} onChange={event => this.setState({spinnerValue: event.value})} />
+                        <InputNumber value={this.state.spinnerValue} onChange={event => this.setState({spinnerValue: event.value})} />
                     </div>
         
                     <div className="card card-w-title">

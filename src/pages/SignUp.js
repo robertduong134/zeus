@@ -7,6 +7,20 @@ import { Button } from 'primereact/button';
 import { RadioButton } from 'primereact/radiobutton';
 import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
+import { CascadeSelect } from 'primereact/cascadeselect';
+import logo from "../layout/images/logo-vetc.png";
+import bannerlogo from "../layout/images/extensions/babylon-icon.png";
+import hd1 from "../layout/images/extensions/bg-header.png";
+import hd2 from "../layout/images/extensions/bg-header-2.png";
+import hd3 from "../layout/images/extensions/bg-header-3.png";
+import beginner from "../layout/images/extensions/asset-beginner.png";
+import pro from "../layout/images/extensions/asset-pro.png";
+import enterprise from "../layout/images/extensions/asset-enterprise.png";
+
+import mastercard from "../layout/images/extensions/asset-mastercard.png";
+import visa from "../layout/images/extensions/asset-visa.png";
+import amex from "../layout/images/extensions/asset-amex.png";
+import paypal from "../layout/images/extensions/asset-paypal.png";
 
 export default class SignUp extends Component {
 
@@ -24,15 +38,110 @@ export default class SignUp extends Component {
             val3: null,
             checked: null,
             dropdownCustType: null,
+
+            custType: null,
+            name: null,
+            gender: null,
             dob: null,
-            idIssueDate: null,
             idNo: null,
+            idIssueDate: null,
             idIssuePlace: null,
-            phone: null
+            taxCode: null,
+            taxEffectDate: null,
+            phone: null,
+            email: null,
+            plate: null,
+            provinceCode: null,
+            districtCode: null,
+            precintCode: null,
+            referalCode: null,
+            accountNumber: null,
+
+            selectedCity1: null
         }
         this.createTimeSelect();
         this.createQuestionSelect();
         this.createCustTypeSelect();
+        this.createAreaSelect();
+    }
+
+    createAreaSelect(){
+        this.cascadeSelectArea = [
+            {
+                name: 'Australia',
+                code: 'AU',
+                states: [
+                    {
+                        name: 'New South Wales',
+                        cities: [
+                            { cname: 'Sydney', code: 'A-SY' },
+                            { cname: 'Newcastle', code: 'A-NE' },
+                            { cname: 'Wollongong', code: 'A-WO' }
+                        ]
+                    },
+                    {
+                        name: 'Queensland',
+                        cities: [
+                            { cname: 'Brisbane', code: 'A-BR' },
+                            { cname: 'Townsville', code: 'A-TO' }
+                        ]
+                    },
+
+                ]
+            },
+            {
+                name: 'Canada',
+                code: 'CA',
+                states: [
+                    {
+                        name: 'Quebec',
+                        cities: [
+                            { cname: 'Montreal', code: 'C-MO' },
+                            { cname: 'Quebec City', code: 'C-QU' }
+                        ]
+                    },
+                    {
+                        name: 'Ontario',
+                        cities: [
+                            { cname: 'Ottawa', code: 'C-OT' },
+                            { cname: 'Toronto', code: 'C-TO' }
+                        ]
+                    },
+
+                ]
+            },
+            {
+                name: 'United States',
+                code: 'US',
+                states: [
+                    {
+                        name: 'California',
+                        cities: [
+                            { cname: 'Los Angeles', code: 'US-LA' },
+                            { cname: 'San Diego', code: 'US-SD' },
+                            { cname: 'San Francisco', code: 'US-SF' }
+                        ]
+                    },
+                    {
+                        name: 'Florida',
+                        cities: [
+                            { cname: 'Jacksonville', code: 'US-JA' },
+                            { cname: 'Miami', code: 'US-MI' },
+                            { cname: 'Tampa', code: 'US-TA' },
+                            { cname: 'Orlando', code: 'US-OR' }
+                        ]
+                    },
+                    {
+                        name: 'Texas',
+                        cities: [
+                            { cname: 'Austin', code: 'US-AU' },
+                            { cname: 'Dallas', code: 'US-DA' },
+                            { cname: 'Houston', code: 'US-HO' }
+                        ]
+                    }
+                ]
+            }
+        ];
     }
 
     createCustTypeSelect(){
@@ -106,7 +215,7 @@ export default class SignUp extends Component {
             <div className="wizard-wrapper">
                 <div className="wizard-header">
                     <div className="wizard-logo">
-                        <img src="assets/layout/images/logo-vetc.png" alt="babylon-layout" style={{cursor: 'pointer'}}/>
+                        <img src={logo} alt="babylon-layout" style={{cursor: 'pointer'}}/>
                     </div>
                 </div>
 
@@ -115,24 +224,24 @@ export default class SignUp extends Component {
                         <div className="wizard-card-header">
                             <div className="wizard-card-header-banner">
                                 <div className="banner-logo">
-                                    <img src="assets/layout/images/extensions/babylon-icon.png"
+                                    <img src={bannerlogo}
                                         alt="babylon-layout" />
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-1", { 'active-banner': this.state.activeTab === 'register' })}>
                                     <h1>Đăng ký tài khoản VETC</h1>
-                                    <img src="assets/layout/images/extensions/bg-header.png" alt="babylon-layout" />
+                                    <img src={hd1} alt="babylon-layout" />
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-2", { 'active-banner': this.state.activeTab === 'tier' })}>
                                     <h1>Chọn số tài khoản VETC</h1>
-                                    <img src="assets/layout/images/extensions/bg-header-2.png"
+                                    <img src={hd2}
                                         alt="babylon-layout" />
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-3", { 'active-banner': this.state.activeTab === 'payment' })}>
                                     <h1>Nạp tiền vào tài khoản VETC để hoàn thành đăng ký</h1>
-                                    <img src="assets/layout/images/extensions/bg-header-3.png"
+                                    <img src={hd3}
                                         alt="babylon-layout" />
                                 </div>
                             </div>
@@ -165,7 +274,7 @@ export default class SignUp extends Component {
                                 <div className="p-col-12 p-md-6 wizard-forms">
 
                                     <label htmlFor="custtype" className="form-label">Loại khách hàng</label>
-                                    <Dropdown id="custtype" style={{ marginBottom: '10px' }} 
+                                    <Dropdown id="custtype"
                                         options={this.dropdownCustTypes} value={this.state.dropdownCustType}
                                         onChange={event => this.setState({dropdownCustType: event.value})} />
 
@@ -173,22 +282,38 @@ export default class SignUp extends Component {
                                     <InputText id="name" onChange={(e) => this.setState({name: e.target.value})} />
 
                                     <label htmlFor="dob" className="form-label">Ngày sinh</label>
-                                    <Calendar id="dob" value={this.state.dob} onChange={(e) => this.setState({ dob: e.value })} />
+                                    <InputMask id="dob" mask="99/99/9999" value={this.state.dob} placeholder="31/12/2021" slotChar="dd/mm/yyyy" onChange={(e) => this.setState({dob: e.value})}></InputMask>
 
                                     <label htmlFor="idNo" className="form-label">Số CMND/CCCD</label>
                                     <InputText id="idNo" onChange={(e) => this.setState({idNo: e.target.value})}/>
 
                                     <label htmlFor="idIssueDate" className="form-label">Ngày cấp CMND/CCCD</label>
-                                    <Calendar id="idIssueDate" value={this.state.dob} onChange={(e) => this.setState({ dob: e.value })} />
+                                    <InputMask id="idIssueDate" mask="99/99/9999" value={this.state.idIssueDate} placeholder="31/12/2021" slotChar="dd/mm/yyyy" onChange={(e) => this.setState({idIssueDate: e.value})}></InputMask>
 
                                     <label htmlFor="idIssuePlace" className="form-label">Nơi cấp CMND/CCCD</label>
                                     <InputText id="idIssuePlace" onChange={(e) => this.setState({idIssuePlace: e.target.value})} />
                                 </div>
                                 <div className="p-col-12 p-md-6 wizard-forms">
+                                    <label htmlFor="taxCode" className="form-label">MST</label>
+                                    <InputText id="taxCode" onChange={(e) => this.setState({taxCode: e.target.value})} />
+
+                                    <label htmlFor="taxEffectDate" className="form-label">Ngày hiệu lực MST</label>
+                                    <InputMask id="taxEffectDate" mask="99/99/9999" value={this.state.taxEffectDate} placeholder="31/12/2021" slotChar="dd/mm/yyyy" onChange={(e) => this.setState({taxEffectDate: e.value})}></InputMask>
+
                                     <label htmlFor="phone" className="form-label">Số điện thoại</label>
                                     <InputText id="phone" onChange={(e) => this.setState({phone: e.target.value})}/>
 
-                                    <label htmlFor="timezone" className="form-label">Select Timezone</label>
+                                    <label htmlFor="email" className="form-label">Email</label>
+                                    <InputText id="email" onChange={(e) => this.setState({email: e.target.value})}/>
+
+                                    <label htmlFor="plate" className="form-label">Biển số xe</label>
+                                    <InputText id="plate" onChange={(e) => this.setState({plate: e.target.value})}/>
+
+                                    <label htmlFor="area" className="form-label">Địa chỉ</label>
+                                    <CascadeSelect id="area"  value={this.state.selectedCity1} options={this.cascadeSelectArea}  optionLabel={"cname"} optionGroupLabel={"name"} optionGroupChildren={['states', 'cities']}
+                                    style={{minWidth: '14rem'}} placeholder={"Chọn địa chỉ"} onChange={event => this.setState({selectedCity1: event.value})}/>
+
+                                    {/* <label htmlFor="timezone" className="form-label">Select Timezone</label>
                                     <Dropdown id="timezone" style={{ marginBottom: '10px' }}
                                         options={this.dropdownOptions} value={this.state.dropdownTime}
                                         onChange={event => this.setState({dropdownTime: event.value})} />
@@ -203,7 +328,7 @@ export default class SignUp extends Component {
                                         Babylon?</label>
                                     <Dropdown id="babylon" appendTo={document.body} style={{ marginBottom: '10px' }}
                                         options={this.dropdownOptions2} value={this.state.dropdownHear}
-                                        onChange={event => this.setState({dropdownHear: event.value})} />
+                                        onChange={event => this.setState({dropdownHear: event.value})} /> */}
                                 </div>
                                 <div className="wizard-button">
                                     <Button className="continue-button" label="TIẾP TỤC"
@@ -220,7 +345,7 @@ export default class SignUp extends Component {
                                         className={classNames("wizard-tier-card beginner", { 'active-tier-card': this.state.activeCard === 'basic' })}
                                         onClick={() => this.setState({activeCard: 'basic'})}>
                                         <div className="wizard-tier-card-header">
-                                            <img src="assets/layout/images/extensions/asset-beginner.png"
+                                            <img src={beginner}
                                                 alt="babylon-layout" />
                                         </div>
                                         <div className="wizard-tier-card-content">
@@ -255,7 +380,7 @@ export default class SignUp extends Component {
                                         className={classNames("wizard-tier-card professional", { 'active-tier-card': this.state.activeCard === 'professional' })}
                                         onClick={() => this.setState({activeCard: 'professional'})}>
                                         <div className="wizard-tier-card-header">
-                                            <img src="assets/layout/images/extensions/asset-pro.png"
+                                            <img src={pro}
                                                 alt="babylon-layout" />
                                         </div>
                                         <div className="wizard-tier-card-content">
@@ -290,7 +415,7 @@ export default class SignUp extends Component {
                                         className={classNames("wizard-tier-card enterprise", { 'active-tier-card': this.state.activeCard === 'enterprise' })}
                                         onClick={() => this.setState({activeCard: 'enterprise'})}>
                                         <div className="wizard-tier-card-header">
-                                            <img src="assets/layout/images/extensions/asset-enterprise.png"
+                                            <img src={enterprise}
                                                 alt="babylon-layout" />
                                         </div>
                                         <div className="wizard-tier-card-content">
@@ -339,11 +464,11 @@ export default class SignUp extends Component {
                                         </div>
                                         <div className="p-col-11 p-lg-5 p-md-5">
                                             <div className="credits">
-                                                <img src="assets/layout/images/extensions/asset-mastercard.png"
+                                                <img src={mastercard}
                                                     alt="babylon-layout" />
-                                                <img src="assets/layout/images/extensions/asset-visa.png"
+                                                <img src={visa}
                                                     alt="babylon-layout" />
-                                                <img src="assets/layout/images/extensions/asset-amex.png"
+                                                <img src={amex}
                                                     alt="babylon-layout" />
                                             </div>
                                         </div>
@@ -354,7 +479,7 @@ export default class SignUp extends Component {
                                         </div>
                                         <div className="p-col-11 p-lg-5 p-md-5">
                                             <div className="paypal">
-                                                <img src="assets/layout/images/extensions/asset-paypal.png"
+                                                <img src={paypal}
                                                     alt="babylon-layout" />
                                             </div>
                                         </div>

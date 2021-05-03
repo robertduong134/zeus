@@ -1,5 +1,5 @@
 .wizard-body {
-	background: url("/assets/layout/images/extensions/background.jpg") center;
+	background: url("../images/extensions/background.jpg") center;
 	background-size: cover;
 	background-repeat: no-repeat;
 	height: 100vh;
@@ -155,6 +155,24 @@
 								border-radius: 2px;
 							}
 							.p-dropdown-trigger {
+								background-color: #405965;
+								color: #ffffff;
+								-moz-border-radius: 2px;
+								-webkit-border-radius: 2px;
+								border-radius: 2px;
+							}
+						}
+						.p-cascadeselect {
+							border: solid 1px #527382;
+							width: 100%;
+							.p-cascadeselect-label {
+								background-color: #405965;
+								color: #ffffff;
+								-moz-border-radius: 2px;
+								-webkit-border-radius: 2px;
+								border-radius: 2px;
+							}
+							.p-cascadeselect-trigger {
 								background-color: #405965;
 								color: #ffffff;
 								-moz-border-radius: 2px;
