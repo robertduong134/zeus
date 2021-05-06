@@ -340,9 +340,9 @@ export default class SignUp extends Component {
                                     </div>
                                 </div>
                                 <div className={classNames('transfer-note', {'selected': this.state.payMethod === 'TF'})}>
-                                    <p>Người hưởng: Công ty TNHH Thu phí tự động VETC - Số tài khoản: 16010000000626</p>
-                                    <p>Tại: Sở giao dịch III (Hà Nội) - Ngân hàng TMCP Đầu tư và Phát triển Việt nam (BIDV)</p>
-                                    <p>Nội dung: VETC_O_ABCXYZ</p>
+                                    <p>Người hưởng: <b>CÔNG TY TNHH THU PHÍ TỰ ĐỘNG VETC</b> - Số tài khoản: <b>16010000000626</b></p>
+                                    <p>Tại: <b>SỞ GIAO DỊCH III (HÀ NỘI) - NGÂN HÀNG TMCP ĐẦU TƯ VÀ PHÁT TRIỂN VIỆT NAM (BIDV)</b></p>
+                                    <p>Nội dung: <b>VETC_O_ABCXYZ</b></p>
                                 </div>
                                 <div className={classNames('transfer-note', {'selected': this.state.payMethod !== 'TF'})}>
                                     <p>&nbsp;</p>
