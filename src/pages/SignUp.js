@@ -2,25 +2,17 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
-import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import { RadioButton } from 'primereact/radiobutton';
 import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
 import { CascadeSelect } from 'primereact/cascadeselect';
+
 import logo from "../layout/images/logo-vetc.png";
 import bannerlogo from "../layout/images/extensions/babylon-icon.png";
 import hd1 from "../layout/images/extensions/bg-header.png";
 import hd2 from "../layout/images/extensions/bg-header-2.png";
 import hd3 from "../layout/images/extensions/bg-header-3.png";
-import beginner from "../layout/images/extensions/asset-beginner.png";
-import pro from "../layout/images/extensions/asset-pro.png";
-import enterprise from "../layout/images/extensions/asset-enterprise.png";
-
-import mastercard from "../layout/images/extensions/asset-mastercard.png";
-import visa from "../layout/images/extensions/asset-visa.png";
-import amex from "../layout/images/extensions/asset-amex.png";
-import paypal from "../layout/images/extensions/asset-paypal.png";
 
 export default class SignUp extends Component {
 
@@ -56,11 +48,15 @@ export default class SignUp extends Component {
             precintCode: null,
             referalCode: null,
             accountNumber: null,
+            accountNumberStatus: null,
 
-            selectedCity1: null
+            selectedArea: null,
+
+            approve1: false,
+            approve2: false,
+
+            payMethod: ''
         }
-        this.createTimeSelect();
-        this.createQuestionSelect();
         this.createCustTypeSelect();
         this.createAreaSelect();
     }
@@ -68,22 +64,24 @@ export default class SignUp extends Component {
     createAreaSelect(){
         this.cascadeSelectArea = [
             {
-                name: 'Australia',
-                code: 'AU',
+                name: 'Thành phố Hà Nội',
+                code: 'HNA',
                 states: [
                     {
-                        name: 'New South Wales',
+                        name: 'Quận Hà Đông',
+                        code: 'HDO',
                         cities: [
-                            { cname: 'Sydney', code: 'A-SY' },
-                            { cname: 'Newcastle', code: 'A-NE' },
-                            { cname: 'Wollongong', code: 'A-WO' }
+                            { cname: 'Phường Mộ Lao', code: 'A-SY' },
+                            { cname: 'Phường Hà Cầu', code: 'A-NE' },
+                            { cname: 'Phường Dương Nội', code: 'A-WO' }
                         ]
                     },
                     {
-                        name: 'Queensland',
+                        name: 'Quận Đống Đa',
+                        code: 'DDA',
                         cities: [
-                            { cname: 'Brisbane', code: 'A-BR' },
-                            { cname: 'Townsville', code: 'A-TO' }
+                            { cname: 'Phường Tây Sơn', code: 'A-BR' },
+                            { cname: 'Phường Thái Hà', code: 'A-TO' }
                         ]
                     },
 
@@ -152,63 +150,6 @@ export default class SignUp extends Component {
         ]
     }
 
-    createTimeSelect() {
-        this.dropdownOptions = [
-            { label: 'Select Time Zone', value: null },
-            { label: 'UTC-12.00', value: { id: 1, name: 'UTC-12.00', code: '-12' } },
-            { label: 'UTC-11.00', value: { id: 2, name: 'UTC-11.00', code: '-11' } },
-            { label: 'UTC-10.00', value: { id: 3, name: 'UTC-10.00', code: '-10' } },
-            { label: 'UTC-09.30', value: { id: 4, name: 'UTC-09.30', code: '-93' } },
-            { label: 'UTC-09.00', value: { id: 5, name: 'UTC-09.00', code: '-09' } },
-            { label: 'UTC-08.00', value: { id: 6, name: 'UTC-08.00', code: '-08' } },
-            { label: 'UTC-07.00', value: { id: 7, name: 'UTC-07.00', code: '-07' } },
-            { label: 'UTC-06.00', value: { id: 8, name: 'UTC-06.00', code: '-06' } },
-            { label: 'UTC-05.00', value: { id: 9, name: 'UTC-05.00', code: '-05' } },
-            { label: 'UTC-04.00', value: { id: 10, name: 'UTC-04.00', code: '-04' } },
-            { label: 'UTC-03.30', value: { id: 11, name: 'UTC-03.30', code: '-33' } },
-            { label: 'UTC-03.00', value: { id: 12, name: 'UTC-03.00', code: '-03' } },
-            { label: 'UTC-02.00', value: { id: 13, name: 'UTC-02.00', code: '-02' } },
-            { label: 'UTC-01.00', value: { id: 14, name: 'UTC-01.00', code: '-01' } },
-            { label: 'UTC-+00.00', value: { id: 15, name: 'UTC-+00.00', code: '-00' } },
-            { label: 'UTC+01.00', value: { id: 16, name: 'UTC+01.00', code: '+01' } },
-            { label: 'UTC+02.00', value: { id: 17, name: 'UTC+02.00', code: '+02' } },
-            { label: 'UTC+03.00', value: { id: 18, name: 'UTC+03.00', code: '+03' } },
-            { label: 'UTC+03.30', value: { id: 19, name: 'UTC+03.30', code: '+33' } },
-            { label: 'UTC+04.00', value: { id: 20, name: 'UTC+04.00', code: '+04' } },
-            { label: 'UTC+04.30', value: { id: 21, name: 'UTC+04.30', code: '+43' } },
-            { label: 'UTC+05.00', value: { id: 22, name: 'UTC+05.00', code: '+05' } },
-            { label: 'UTC+05.30', value: { id: 23, name: 'UTC+05.30', code: '+53' } },
-            { label: 'UTC+05.45', value: { id: 24, name: 'UTC+05.45', code: '+54' } },
-            { label: 'UTC+06.00', value: { id: 25, name: 'UTC+06.00', code: '+06' } },
-            { label: 'UTC+06.30', value: { id: 26, name: 'UTC+06.30', code: '+63' } },
-            { label: 'UTC+07.00', value: { id: 27, name: 'UTC+07.00', code: '+07' } },
-            { label: 'UTC+08.00', value: { id: 28, name: 'UTC+08.00', code: '+08' } },
-            { label: 'UTC+08.45', value: { id: 29, name: 'UTC+08.45', code: '+84' } },
-            { label: 'UTC+09.00', value: { id: 30, name: 'UTC+09.00', code: '+09' } },
-            { label: 'UTC+09.30', value: { id: 31, name: 'UTC+09.30', code: '+93' } },
-            { label: 'UTC+10.00', value: { id: 32, name: 'UTC+10.00', code: '+10' } },
-            { label: 'UTC+10.30', value: { id: 33, name: 'UTC+10.30', code: '+13' } },
-            { label: 'UTC+11.00', value: { id: 34, name: 'UTC+01.00', code: '+11' } },
-            { label: 'UTC+12.00', value: { id: 35, name: 'UTC+01.00', code: '+12' } },
-            { label: 'UTC+12.45', value: { id: 36, name: 'UTC+01.00', code: '+24' } },
-            { label: 'UTC+13.00', value: { id: 37, name: 'UTC+01.00', code: '+13' } },
-            { label: 'UTC+14.00', value: { id: 38, name: 'UTC+01.00', code: '+14' } },
-        ];
-    }
-
-    createQuestionSelect() {
-        this.dropdownOptions2 = [
-                { label: 'Where did you hear Babylon?', value: null },
-                { label: 'Blogs', value: 'Blogs' },
-                { label: 'Google Ads', value: 'google' },
-                { label: 'Your Forum', value: 'prime-forum' },
-                { label: 'Youtube', value: 'Youtube' },
-                { label: 'Reddit', value: 'Reddit' },
-                { label: 'Events', value: 'Events' },
-                { label: 'Other', value: 'Other' }
-            ];
-    }
-
     render() {
         return (
         <div className="wizard-body">
@@ -240,7 +181,7 @@ export default class SignUp extends Component {
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-3", { 'active-banner': this.state.activeTab === 'payment' })}>
-                                    <h1>Nạp tiền vào tài khoản VETC để hoàn thành đăng ký</h1>
+                                    <h1>Nạp tiền vào tài khoản VETC</h1>
                                     <img src={hd3}
                                         alt="babylon-layout" />
                                 </div>
@@ -268,68 +209,56 @@ export default class SignUp extends Component {
                             className={classNames("wizard-card-content register", { 'active-content': this.state.activeTab === 'register' })}>
                             <div className="warning">
                                 <i className="pi pi-exclamation-circle"></i>
-                                <p>Bạn phải có tài khoản VETC để có thể sử dụng các dịch vụ thu phí tự động.</p>
+                                <p>Đối với loại tài khoản dành cho khách hàng doanh nghiệp cần phải nhập đầy đủ thông tin Mã số thuế.</p>
                             </div>
                             <div className="wizard-forms-wrapper p-grid p-nogutter">
-                                <div className="p-col-12 p-md-6 wizard-forms">
-
+                                <div className="p-col-12 p-md-3 wizard-forms">
                                     <label htmlFor="custtype" className="form-label">Loại khách hàng</label>
                                     <Dropdown id="custtype"
                                         options={this.dropdownCustTypes} value={this.state.dropdownCustType}
                                         onChange={event => this.setState({dropdownCustType: event.value})} />
 
                                     <label htmlFor="name" className="form-label">Họ và tên</label>
-                                    <InputText id="name" onChange={(e) => this.setState({name: e.target.value})} />
+                                    <InputText id="name" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})} placeholder="Nguyễn Văn A" />
 
                                     <label htmlFor="dob" className="form-label">Ngày sinh</label>
                                     <InputMask id="dob" mask="99/99/9999" value={this.state.dob} placeholder="31/12/2021" slotChar="dd/mm/yyyy" onChange={(e) => this.setState({dob: e.value})}></InputMask>
+                                </div>
 
+                                <div className="p-col-12 p-md-3 wizard-forms">
                                     <label htmlFor="idNo" className="form-label">Số CMND/CCCD</label>
-                                    <InputText id="idNo" onChange={(e) => this.setState({idNo: e.target.value})}/>
+                                    <InputText id="idNo" value={this.state.idNo} onChange={(e) => this.setState({idNo: e.target.value})} placeholder="090099009999" />
 
                                     <label htmlFor="idIssueDate" className="form-label">Ngày cấp CMND/CCCD</label>
                                     <InputMask id="idIssueDate" mask="99/99/9999" value={this.state.idIssueDate} placeholder="31/12/2021" slotChar="dd/mm/yyyy" onChange={(e) => this.setState({idIssueDate: e.value})}></InputMask>
 
                                     <label htmlFor="idIssuePlace" className="form-label">Nơi cấp CMND/CCCD</label>
-                                    <InputText id="idIssuePlace" onChange={(e) => this.setState({idIssuePlace: e.target.value})} />
+                                    <InputText id="idIssuePlace" value={this.state.idIssuePlace} onChange={(e) => this.setState({idIssuePlace: e.target.value})} placeholder="Hà Nội" />
                                 </div>
-                                <div className="p-col-12 p-md-6 wizard-forms">
-                                    <label htmlFor="taxCode" className="form-label">MST</label>
-                                    <InputText id="taxCode" onChange={(e) => this.setState({taxCode: e.target.value})} />
 
-                                    <label htmlFor="taxEffectDate" className="form-label">Ngày hiệu lực MST</label>
-                                    <InputMask id="taxEffectDate" mask="99/99/9999" value={this.state.taxEffectDate} placeholder="31/12/2021" slotChar="dd/mm/yyyy" onChange={(e) => this.setState({taxEffectDate: e.value})}></InputMask>
-
+                                <div className="p-col-12 p-md-3 wizard-forms">
                                     <label htmlFor="phone" className="form-label">Số điện thoại</label>
-                                    <InputText id="phone" onChange={(e) => this.setState({phone: e.target.value})}/>
+                                    <InputText id="phone" value={this.state.phone} placeholder="0988777666" onChange={(e) => this.setState({phone: e.target.value})}/>
 
                                     <label htmlFor="email" className="form-label">Email</label>
-                                    <InputText id="email" onChange={(e) => this.setState({email: e.target.value})}/>
+                                    <InputText id="email" value={this.state.email} placeholder="vetc@gmail.com" onChange={(e) => this.setState({email: e.target.value})}/>
 
                                     <label htmlFor="plate" className="form-label">Biển số xe</label>
-                                    <InputText id="plate" onChange={(e) => this.setState({plate: e.target.value})}/>
-
-                                    <label htmlFor="area" className="form-label">Địa chỉ</label>
-                                    <CascadeSelect id="area"  value={this.state.selectedCity1} options={this.cascadeSelectArea}  optionLabel={"cname"} optionGroupLabel={"name"} optionGroupChildren={['states', 'cities']}
-                                    style={{minWidth: '14rem'}} placeholder={"Chọn địa chỉ"} onChange={event => this.setState({selectedCity1: event.value})}/>
-
-                                    {/* <label htmlFor="timezone" className="form-label">Select Timezone</label>
-                                    <Dropdown id="timezone" style={{ marginBottom: '10px' }}
-                                        options={this.dropdownOptions} value={this.state.dropdownTime}
-                                        onChange={event => this.setState({dropdownTime: event.value})} />
-
-                                    <div className="calendar">
-                                        <label htmlFor="birthdate" className="form-label"></label>
-                                        <Calendar id="birthdate" appendTo={document.body} value={this.state.date}
-                                            onChange={(e) => this.setState({date: e.value})} />
-                                    </div>
-
-                                    <label htmlFor="babylon" className="form-label">Where did you hear
-                                        Babylon?</label>
-                                    <Dropdown id="babylon" appendTo={document.body} style={{ marginBottom: '10px' }}
-                                        options={this.dropdownOptions2} value={this.state.dropdownHear}
-                                        onChange={event => this.setState({dropdownHear: event.value})} /> */}
+                                    <InputText id="plate" value={this.state.plate} placeholder="34B56789T" onChange={(e) => this.setState({plate: e.target.value})}/>
                                 </div>
+
+                                <div className="p-col-12 p-md-3 wizard-forms">
+                                    <label htmlFor="area" className="form-label">Địa chỉ</label>
+                                    <CascadeSelect id="area"  value={this.state.selectedArea} options={this.cascadeSelectArea}  optionLabel={"cname"} optionGroupLabel={"name"} optionGroupChildren={['states', 'cities']}
+                                    style={{minWidth: '14rem'}} placeholder={"Chọn địa chỉ"} onChange={event => this.setState({selectedArea: event.value})}/>
+
+                                    <label htmlFor="taxCode" className="form-label">Mã số thuế</label>
+                                    <InputText id="taxCode" value={this.state.taxCode} placeholder="0123456789" onChange={(e) => this.setState({taxCode: e.target.value})} />
+
+                                    <label htmlFor="taxEffectDate" className="form-label">Ngày hiệu lực Mã số thuế</label>
+                                    <InputMask id="taxEffectDate" mask="99/99/9999" value={this.state.taxEffectDate} placeholder="31/12/2021" slotChar="dd/mm/yyyy" onChange={(e) => this.setState({taxEffectDate: e.value})}></InputMask>
+                                </div>
+                                
                                 <div className="wizard-button">
                                     <Button className="continue-button" label="TIẾP TỤC"
                                         onClick={() => this.setState({activeTab: 'tier'})} />
@@ -339,209 +268,120 @@ export default class SignUp extends Component {
 
                         <div
                             className={classNames("wizard-card-content tier", { 'active-content': this.state.activeTab === 'tier' })}>
-                            <div className="wizard-tier-cards p-grid">
-                                <div className="p-col-12 p-md-4">
-                                    <div
-                                        className={classNames("wizard-tier-card beginner", { 'active-tier-card': this.state.activeCard === 'basic' })}
-                                        onClick={() => this.setState({activeCard: 'basic'})}>
-                                        <div className="wizard-tier-card-header">
-                                            <img src={beginner}
-                                                alt="babylon-layout" />
-                                        </div>
-                                        <div className="wizard-tier-card-content">
-                                            <div className="title">
-                                                <h1>Beginner</h1>
-                                                <span>Starting from $5 per month</span>
-                                            </div>
-                                            <ul>
-                                                <li className="active-list-item">
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Responsive</p>
-                                                </li>
-                                                <li>
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Push Notifications</p>
-                                                </li>
-                                                <li>
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>7/24 Support</p>
-                                                </li>
-                                                <li>
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Unlimited Space</p>
-                                                </li>
-                                            </ul>
-                                        </div>
+                            <div className="warning">
+                                <i className="pi pi-exclamation-circle"></i>
+                                <p>Số tài khoản sẽ không thể thay đổi sau khi được cấp.</p>
+                            </div>
+                            <div className="wizard-forms-wrapper p-grid p-nogutter">
+                                <div className="p-col-12 p-md-4 wizard-forms">
+                                    <label htmlFor="accountNumber" className="form-label">Số tài khoản</label>
+                                    <div className="p-inputgroup">
+                                        <InputMask className="p-inputtext" id="accountNumber" mask="E02-9999-9999" value={this.state.accountNumber} placeholder="E02-9999-9999" onChange={(e) => this.setState({accountNumber: e.value})}></InputMask>
+                                        <Button icon="pi pi-search" className="p-button-warning"/>
                                     </div>
+                                    <small id="accountNumber-help" className="p-d-block">Nhập và kiểm tra số tài khoản VETC mà bạn muốn đăng ký.</small>
+
+                                    <label htmlFor="accountNumberStatus" className="form-label">Trạng thái số tài khoản</label>
+                                    <InputText id="accountNumberStatus" value={this.state.accountNumberStatus} onChange={(e) => this.setState({accountNumberStatus: e.target.value})} className="p-inputtext" disabled="true" placeholder="Khả dụng"></InputText>
                                 </div>
 
-                                <div className="p-col-12 p-md-4">
-                                    <div
-                                        className={classNames("wizard-tier-card professional", { 'active-tier-card': this.state.activeCard === 'professional' })}
-                                        onClick={() => this.setState({activeCard: 'professional'})}>
-                                        <div className="wizard-tier-card-header">
-                                            <img src={pro}
-                                                alt="babylon-layout" />
-                                        </div>
-                                        <div className="wizard-tier-card-content">
-                                            <div className="title">
-                                                <h1>Professional</h1>
-                                                <span>Starting from $10 per month</span>
-                                            </div>
-                                            <ul>
-                                                <li className="active-list-item">
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Responsive</p>
-                                                </li>
-                                                <li className="active-list-item">
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Push Notifications</p>
-                                                </li>
-                                                <li>
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>7/24 Support</p>
-                                                </li>
-                                                <li>
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Unlimited Space</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                <div className="p-col-12 p-md-2 wizard-forms">
+
                                 </div>
 
-                                <div className="p-col-12 p-md-4">
-                                    <div
-                                        className={classNames("wizard-tier-card enterprise", { 'active-tier-card': this.state.activeCard === 'enterprise' })}
-                                        onClick={() => this.setState({activeCard: 'enterprise'})}>
-                                        <div className="wizard-tier-card-header">
-                                            <img src={enterprise}
-                                                alt="babylon-layout" />
-                                        </div>
-                                        <div className="wizard-tier-card-content">
-                                            <div className="title">
-                                                <h1>Enterprise</h1>
-                                                <span>Starting from $20 per month</span>
-                                            </div>
-                                            <ul>
-                                                <li className="active-list-item">
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Responsive</p>
-                                                </li>
-                                                <li className="active-list-item">
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Push Notifications</p>
-                                                </li>
-                                                <li className="active-list-item">
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>7/24 Support</p>
-                                                </li>
-                                                <li className="active-list-item">
-                                                    <i className="pi pi-check-circle"></i>
-                                                    <p>Unlimited Space</p>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                <div className="p-col-12 p-md-6 wizard-forms">
+                                    <label htmlFor="referalCode" className="form-label">Mã giới thiệu</label>
+                                    <InputText id="referalCode" value={this.state.referalCode} onChange={(e) => this.setState({referalCode: e.target.value})} className="p-inputtext" placeholder="VETC568ABZ"></InputText>
+                                
+                                    <div style={{ marginTop: "50px", color: "#ffffff" }}>
+                                        <Checkbox inputId="cb1" checked={this.state.approve1}
+                                            onChange={e => this.setState({approve1: e.checked})} />
+                                        <label htmlFor="cb1" className="p-checkbox-label p-ml-2">Tôi cam kết các thông tin đã cung cấp tại đây hoàn toàn chính xác.</label>
                                     </div>
+
+                                    <div style={{ marginTop: "24px", color: "#ffffff" }}>
+                                        <Checkbox inputId="cb2" checked={this.state.approve2}
+                                            onChange={e => this.setState({approve2: e.checked})} />
+                                        <label htmlFor="cb2" className="p-checkbox-label p-ml-2">Tôi đồng ý với các Điều kiện và Điều khoản của VETC Online.</label>
+                                    </div>
+                                </div>
+                                
+                                <div className="wizard-button">
+                                    <Button className="continue-button" label="TIẾP TỤC"
+                                        onClick={() => this.setState({activeTab: 'payment'})} />
                                 </div>
                             </div>
 
-                            <div className="wizard-button">
-                                <Button className="continue-button" label="TIẾP TỤC"
-                                    onClick={() => this.setState({activeTab: 'payment'})} />
-                            </div>
                         </div>
 
                         <div
                             className={classNames("wizard-card-content payment", { 'active-content': this.state.activeTab === 'payment' })}>
                             <div className="wizard-forms-wrapper">
-                                <div className="wizard-forms ">
-                                    <div className="customPanel p-grid p-nogutter">
-                                        <div className="p-col-1 p-lg-1 p-md-1" style={{ lineHeight: '2em' }}>
-                                            <RadioButton inputId="credit" name="group1" value="Credit"
-                                                onChange={(e) => this.setState({group1: e.value})}
-                                                checked={this.state.group1 === 'Credit'} />
-                                        </div>
-                                        <div className="p-col-11 p-lg-5 p-md-5">
-                                            <div className="credits">
-                                                <img src={mastercard}
-                                                    alt="babylon-layout" />
-                                                <img src={visa}
-                                                    alt="babylon-layout" />
-                                                <img src={amex}
-                                                    alt="babylon-layout" />
-                                            </div>
-                                        </div>
-                                        <div className="p-col-1 p-lg-1 p-md-1" style={{ lineHeight: '2em' }}>
-                                            <RadioButton inputId="paypal" name="group1" value="Paypal"
-                                                onChange={(e) => this.setState({group1: e.value})}
-                                                checked={this.state.group1 === 'Paypal'} />
-                                        </div>
-                                        <div className="p-col-11 p-lg-5 p-md-5">
-                                            <div className="paypal">
-                                                <img src={paypal}
-                                                    alt="babylon-layout" />
-                                            </div>
-                                        </div>
+                                <div className="warning">
+                                    <i className="pi pi-exclamation-circle"></i>
+                                    <p>LỰA CHỌN HÌNH THỨC NẠP TIỀN</p>
+                                </div>
+                                <div className="wizard-forms">
+                                    <div className="p-field-radiobutton">
+                                        <RadioButton inputId="payMethod1" name="payMethod" value="CC" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'CC'} />
+                                        <label htmlFor="payMethod1">Nạp tiền qua thẻ tín dụng</label>
                                     </div>
-
-                                    <label htmlFor="holderName" className="form-label">Cardholder Name</label>
-                                    <InputText id="holderName" type="text" />
-
-                                    <div className="numbers p-grid">
-                                        <div className="p-col-12 p-md-6">
-                                            <label htmlFor="number" className="form-label">Cardholder Number</label>
-                                            <InputMask id="number" mask="9999-9999-9999-9999"
-                                                value={this.state.val1}
-                                                onChange={(e) => this.setState({val1: e.value})} />
-                                        </div>
-                                        <div className="p-col-6 p-md-3">
-                                            <label htmlFor="date" className="form-label">Date</label>
-                                            <InputMask id="date" mask="99/99" value={this.state.val2}
-                                                onChange={(e) => this.setState({val2: e.value})} />
-                                        </div>
-                                        <div className="p-col-6 p-md-3">
-                                            <label htmlFor="ccv" className="form-label">CCV</label>
-                                            <InputMask id="ccv" mask="999" value={this.state.val3}
-                                                onChange={(e) => this.setState({val3: e.value})} />
-                                        </div>
+                                    <div className="p-field-radiobutton">
+                                        <RadioButton inputId="payMethod2" name="payMethod" value="ATM" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'ATM'} />
+                                        <label htmlFor="payMethod2">Nạp tiền qua thẻ ATM nội địa/Internet Banking (Miễn phí thanh toán)</label>
                                     </div>
-
-                                    <div style={{ marginTop: '24px' }}>
-                                        <Checkbox inputId="cb1" checked={this.state.checked}
-                                            onChange={e => this.setState({checked: e.checked})} />
-                                        <label htmlFor="cb1" className="p-checkbox-label p-ml-2">Save credit card
-                                            information for future usage</label>
+                                    <div className="p-field-radiobutton">
+                                        <RadioButton inputId="payMethod3" name="payMethod" value="EW" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'EW'} />
+                                        <label htmlFor="payMethod3">Nạp tiền qua ví điện tử (VNPAY, MOMO, ZALOPAY)</label>
                                     </div>
+                                    <div className="p-field-radiobutton">
+                                        <RadioButton inputId="payMethod4" name="payMethod" value="TF" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'TF'} />
+                                        <label htmlFor="payMethod4">Nạp tiền qua chuyển khoản ngân hàng</label>
+                                    </div>
+                                </div>
+                                <div className={classNames('transfer-note', {'selected': this.state.payMethod === 'TF'})}>
+                                    <p>Người hưởng: Công ty TNHH Thu phí tự động VETC - Số tài khoản: 16010000000626</p>
+                                    <p>Tại: Sở giao dịch III (Hà Nội) - Ngân hàng TMCP Đầu tư và Phát triển Việt nam (BIDV)</p>
+                                    <p>Nội dung: VETC_O_ABCXYZ</p>
+                                </div>
+                                <div className={classNames('transfer-note', {'selected': this.state.payMethod !== 'TF'})}>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
                                 </div>
                             </div>
 
                             <div className="wizard-button">
                                 <div
-                                    className={classNames('order-summary order-default', { 'selected-order': this.state.activeCard === '' })}>
-                                    <p>ORDER SUMMARY</p>
-                                    <h1>$00.00</h1>
-                                    <span>Please select one tier.</span>
+                                    className={classNames('order-summary order-default', { 'selected-order': this.state.payMethod === '' })}>
+                                    <p>CHƯA CHỌN HÌNH THỨC NẠP TIỀN</p>
+                                    <span>Vui lòng chọn một hình thức nạp tiền.</span>
                                 </div>
                                 <div
-                                    className={classNames('order-summary order-beginner', { 'selected-order': this.state.activeCard === 'basic' })}>
-                                    <p>ORDER SUMMARY</p>
-                                    <h1>$5.00</h1>
-                                    <span>Babylon Beginner Membership.</span>
+                                    className={classNames('order-summary order-beginner', { 'selected-order': this.state.payMethod === 'CC' })}>
+                                    <p>NẠP TIỀN QUA THẺ TÍN DỤNG</p>
+                                    <h1>200.000 VND</h1>
+                                    <span>Nhấn Hoàn thành đăng ký để chuyển sang đơn vị thanh toán và hoàn tất đăng ký.</span>
                                 </div>
                                 <div
-                                    className={classNames('order-summary order-professional', { 'selected-order': this.state.activeCard === 'professional' })}>
-                                    <p>ORDER SUMMARY</p>
-                                    <h1>$10.00</h1>
-                                    <span>Babylon Professional Membership.</span>
+                                    className={classNames('order-summary order-professional', { 'selected-order': this.state.payMethod === 'ATM' })}>
+                                    <p>NẠP TIỀN QUA ATM HOẶC INTERNET BANKING</p>
+                                    <h1>200.000 VND</h1>
+                                    <span>Nhấn Hoàn thành đăng ký để chuyển sang đơn vị thanh toán và hoàn tất đăng ký.</span>
                                 </div>
                                 <div
-                                    className={classNames('order-summary order-enterprise', { 'selected-order': this.state.activeCard === 'enterprise' })}>
-                                    <p>ORDER SUMMARY</p>
-                                    <h1>$20.00</h1>
-                                    <span>Babylon Enterprise Membership.</span>
+                                    className={classNames('order-summary order-enterprise', { 'selected-order': this.state.payMethod === 'EW' })}>
+                                    <p>NẠP TIỀN QUA VÍ ĐIỆN TỬ</p>
+                                    <h1>200.000 VND</h1>
+                                    <span>Nhấn Hoàn thành đăng ký để chuyển sang đơn vị thanh toán và hoàn tất đăng ký.</span>
                                 </div>
-                                <Button type="button" label="COMPLETE ORDER" />
+                                <div
+                                    className={classNames('order-summary order-enterprise', { 'selected-order': this.state.payMethod === 'TF' })}>
+                                    <p>CHUYỂN KHOẢN</p>
+                                    <h1>200.000 VND</h1>
+                                    <span>Nhấn Hoàn thành để hoàn tất đăng ký. Tài khoản của bạn sẽ chỉ được kích hoạt sau khi hoàn thành chuyển khoản.</span>
+                                </div>
+                                <Button type="button" label="HOÀN THÀNH" />
                             </div>
                         </div>
                     </div>

@@ -203,6 +203,87 @@
 			}
 			.wizard-card-content.tier {
 				display: none;
+				.warning {
+					display: flex;
+					align-items: center;
+					>i {
+						color: #e0284f;
+						margin-right: 10px;
+						font-size: 22px;
+					}
+					>p {
+						color: #ffffff;
+						margin: 0;
+					}
+				}
+				.wizard-forms-wrapper {
+					.wizard-forms {
+						padding: 0 10px;
+						input {
+							width: 100%;
+							border: solid 1px #527382;
+							background-color: #405965;
+							color: #ffffff;
+						}
+						.p-dropdown {
+							border: solid 1px #527382;
+							width: 100%;
+							.p-inputtext {
+								background-color: #405965;
+								color: #ffffff;
+								-moz-border-radius: 2px;
+								-webkit-border-radius: 2px;
+								border-radius: 2px;
+							}
+							.p-dropdown-trigger {
+								background-color: #405965;
+								color: #ffffff;
+								-moz-border-radius: 2px;
+								-webkit-border-radius: 2px;
+								border-radius: 2px;
+							}
+						}
+						.p-cascadeselect {
+							border: solid 1px #527382;
+							width: 100%;
+							.p-cascadeselect-label {
+								background-color: #405965;
+								color: #ffffff;
+								-moz-border-radius: 2px;
+								-webkit-border-radius: 2px;
+								border-radius: 2px;
+							}
+							.p-cascadeselect-trigger {
+								background-color: #405965;
+								color: #ffffff;
+								-moz-border-radius: 2px;
+								-webkit-border-radius: 2px;
+								border-radius: 2px;
+							}
+						}
+						.calendar {
+							.form-label {
+								margin-top: 35px;
+							}
+							span {
+								width: 100%;
+								display: flex;
+								input {
+									width: 100%;
+									border: solid 1px #527382;
+									background-color: #405965;
+									color: #ffffff;
+								}
+							}
+						}
+						.p-d-block{
+							font-style: italic;
+							padding: 10px 0;
+							width: 100%;
+							color: #ffffff;
+						}
+					}
+				}
 				.wizard-tier-cards {
 					margin-bottom: 24px;
 					.wizard-tier-card {
@@ -316,7 +397,7 @@
 					}
 				}
 				.wizard-button {
-					margin-top: 56px;
+					margin-top: 165px;
 				}
 			}
 			.wizard-card-content.payment {
@@ -324,6 +405,19 @@
 				display: none;
 				.wizard-forms-wrapper {
 					padding: 24px 40px;
+					.warning {
+						display: flex;
+						align-items: center;
+						>i {
+							color: #e0284f;
+							margin-right: 10px;
+							font-size: 22px;
+						}
+						>p {
+							color: #ffffff;
+							margin: 0;
+						}
+					}
 					.wizard-forms {
 						width: 66%;
 						.customPanel {
@@ -355,13 +449,27 @@
 							color: #ffffff;
 							font-size: 13px;
 						}
+						.p-field-radiobutton{
+							margin-top: 20px;
+							color: #ffffff;
+						}
+					}
+					.transfer-note {
+						display: none;
+						color: #ffffff;
+						margin-left: 28px;
+						font-size: smaller;
+						font-weight: bold;
+					}
+					.transfer-note.selected {
+						display: block;
 					}
 				}
 				.wizard-button {
 					position: relative;
 					background-image: linear-gradient(to right, rgba(48, 63, 70, 0.15) 23%, rgba(116, 144, 157, 0.15) 60%);
 					padding: 24px 48px;
-					margin-top: 65px;
+					margin-top: 20px;
 					.order-summary {
 						display: none;
 						position: absolute;
