@@ -19,7 +19,7 @@ export default class SignUp extends Component {
     constructor() {
         super();
         this.state = {
-            activeTab: 'register',
+            activeTab: 'tier',
             activeCard: '',
             dropdownTime: null,
             date: null,
@@ -169,15 +169,15 @@ export default class SignUp extends Component {
                                         alt="babylon-layout" />
                                 </div>
                                 <div
-                                    className={classNames("banner-image banner-1", { 'active-banner': this.state.activeTab === 'register' })}>
-                                    <h1>Đăng ký tài khoản VETC</h1>
-                                    <img src={hd1} alt="babylon-layout" />
-                                </div>
-                                <div
                                     className={classNames("banner-image banner-2", { 'active-banner': this.state.activeTab === 'tier' })}>
                                     <h1>Chọn số tài khoản VETC</h1>
                                     <img src={hd2}
                                         alt="babylon-layout" />
+                                </div>
+                                <div
+                                    className={classNames("banner-image banner-1", { 'active-banner': this.state.activeTab === 'register' })}>
+                                    <h1>Đăng ký tài khoản VETC</h1>
+                                    <img src={hd1} alt="babylon-layout" />
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-3", { 'active-banner': this.state.activeTab === 'payment' })}>
@@ -188,14 +188,14 @@ export default class SignUp extends Component {
                             </div>
                             <div className="wizard-card-tabs">
                                 <div
-                                    className={classNames("wizard-card-tab register-tab", { 'selected-tab': this.state.activeTab === 'register' })}
-                                    onClick={() => this.setState({activeTab: 'register'})}>
-                                    ĐĂNG KÝ TÀI KHOẢN
-                                </div>
-                                <div
                                     className={classNames("wizard-card-tab tier-tab", { 'selected-tab': this.state.activeTab === 'tier' })}
                                     onClick={() => this.setState({activeTab: 'tier'})}>
                                     CHỌN SỐ TÀI KHOẢN
+                                </div>
+                                <div
+                                    className={classNames("wizard-card-tab register-tab", { 'selected-tab': this.state.activeTab === 'register' })}
+                                    onClick={() => this.setState({activeTab: 'register'})}>
+                                    ĐĂNG KÝ TÀI KHOẢN
                                 </div>
                                 <div
                                     className={classNames("wizard-card-tab payment-tab", { 'selected-tab': this.state.activeTab === 'payment' })}
@@ -203,6 +203,54 @@ export default class SignUp extends Component {
                                     NẠP TIỀN
                                 </div>
                             </div>
+                        </div>
+
+                        <div
+                            className={classNames("wizard-card-content tier", { 'active-content': this.state.activeTab === 'tier' })}>
+                            <div className="warning">
+                                <i className="pi pi-exclamation-circle"></i>
+                                <p>Số tài khoản sẽ không thể thay đổi sau khi được cấp.</p>
+                            </div>
+                            <div className="wizard-forms-wrapper p-grid p-nogutter">
+                                <div className="p-col-12 p-md-4 wizard-forms">
+                                    <label htmlFor="accountNumber" className="form-label">Số tài khoản</label>
+                                    <div className="p-inputgroup">
+                                        <InputMask className="p-inputtext" id="accountNumber" mask="E02-9999-9999" value={this.state.accountNumber} placeholder="E02-9999-9999" onChange={(e) => this.setState({accountNumber: e.value})}></InputMask>
+                                        <Button icon="pi pi-search" className="p-button-warning"/>
+                                    </div>
+                                    <small id="accountNumber-help" className="p-d-block">Nhập và kiểm tra số tài khoản VETC mà bạn muốn đăng ký.</small>
+
+                                    <label htmlFor="accountNumberStatus" className="form-label">Trạng thái số tài khoản</label>
+                                    <InputText id="accountNumberStatus" value={this.state.accountNumberStatus} onChange={(e) => this.setState({accountNumberStatus: e.target.value})} className="p-inputtext" disabled="true" placeholder="Khả dụng"></InputText>
+                                </div>
+
+                                <div className="p-col-12 p-md-2 wizard-forms">
+
+                                </div>
+
+                                <div className="p-col-12 p-md-6 wizard-forms">
+                                    <label htmlFor="referalCode" className="form-label">Mã giới thiệu</label>
+                                    <InputText id="referalCode" value={this.state.referalCode} onChange={(e) => this.setState({referalCode: e.target.value})} className="p-inputtext" placeholder="VETC568ABZ"></InputText>
+                                
+                                    <div style={{ marginTop: "50px", color: "#ffffff" }}>
+                                        <Checkbox inputId="cb1" checked={this.state.approve1}
+                                            onChange={e => this.setState({approve1: e.checked})} />
+                                        <label htmlFor="cb1" className="p-checkbox-label p-ml-2">Tôi cam kết các thông tin cung cấp tại đây là hoàn toàn chính xác.</label>
+                                    </div>
+
+                                    <div style={{ marginTop: "24px", color: "#ffffff" }}>
+                                        <Checkbox inputId="cb2" checked={this.state.approve2}
+                                            onChange={e => this.setState({approve2: e.checked})} />
+                                        <label htmlFor="cb2" className="p-checkbox-label p-ml-2">Tôi đồng ý với các Điều kiện và Điều khoản của VETC.</label>
+                                    </div>
+                                </div>
+                                
+                                <div className="wizard-button">
+                                    <Button className="continue-button" label="TIẾP TỤC"
+                                        onClick={() => this.setState({activeTab: 'register'})} />
+                                </div>
+                            </div>
+
                         </div>
 
                         <div
@@ -261,57 +309,9 @@ export default class SignUp extends Component {
                                 
                                 <div className="wizard-button">
                                     <Button className="continue-button" label="TIẾP TỤC"
-                                        onClick={() => this.setState({activeTab: 'tier'})} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            className={classNames("wizard-card-content tier", { 'active-content': this.state.activeTab === 'tier' })}>
-                            <div className="warning">
-                                <i className="pi pi-exclamation-circle"></i>
-                                <p>Số tài khoản sẽ không thể thay đổi sau khi được cấp.</p>
-                            </div>
-                            <div className="wizard-forms-wrapper p-grid p-nogutter">
-                                <div className="p-col-12 p-md-4 wizard-forms">
-                                    <label htmlFor="accountNumber" className="form-label">Số tài khoản</label>
-                                    <div className="p-inputgroup">
-                                        <InputMask className="p-inputtext" id="accountNumber" mask="E02-9999-9999" value={this.state.accountNumber} placeholder="E02-9999-9999" onChange={(e) => this.setState({accountNumber: e.value})}></InputMask>
-                                        <Button icon="pi pi-search" className="p-button-warning"/>
-                                    </div>
-                                    <small id="accountNumber-help" className="p-d-block">Nhập và kiểm tra số tài khoản VETC mà bạn muốn đăng ký.</small>
-
-                                    <label htmlFor="accountNumberStatus" className="form-label">Trạng thái số tài khoản</label>
-                                    <InputText id="accountNumberStatus" value={this.state.accountNumberStatus} onChange={(e) => this.setState({accountNumberStatus: e.target.value})} className="p-inputtext" disabled="true" placeholder="Khả dụng"></InputText>
-                                </div>
-
-                                <div className="p-col-12 p-md-2 wizard-forms">
-
-                                </div>
-
-                                <div className="p-col-12 p-md-6 wizard-forms">
-                                    <label htmlFor="referalCode" className="form-label">Mã giới thiệu</label>
-                                    <InputText id="referalCode" value={this.state.referalCode} onChange={(e) => this.setState({referalCode: e.target.value})} className="p-inputtext" placeholder="VETC568ABZ"></InputText>
-                                
-                                    <div style={{ marginTop: "50px", color: "#ffffff" }}>
-                                        <Checkbox inputId="cb1" checked={this.state.approve1}
-                                            onChange={e => this.setState({approve1: e.checked})} />
-                                        <label htmlFor="cb1" className="p-checkbox-label p-ml-2">Tôi cam kết các thông tin đã cung cấp tại đây hoàn toàn chính xác.</label>
-                                    </div>
-
-                                    <div style={{ marginTop: "24px", color: "#ffffff" }}>
-                                        <Checkbox inputId="cb2" checked={this.state.approve2}
-                                            onChange={e => this.setState({approve2: e.checked})} />
-                                        <label htmlFor="cb2" className="p-checkbox-label p-ml-2">Tôi đồng ý với các Điều kiện và Điều khoản của VETC Online.</label>
-                                    </div>
-                                </div>
-                                
-                                <div className="wizard-button">
-                                    <Button className="continue-button" label="TIẾP TỤC"
                                         onClick={() => this.setState({activeTab: 'payment'})} />
                                 </div>
                             </div>
-
                         </div>
 
                         <div
@@ -323,15 +323,15 @@ export default class SignUp extends Component {
                                 </div>
                                 <div className="wizard-forms">
                                     <div className="p-field-radiobutton">
-                                        <RadioButton inputId="payMethod1" name="payMethod" value="CC" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'CC'} />
+                                        <RadioButton inputId="payMethod1" disabled={true} name="payMethod" value="CC" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'CC'} />
                                         <label htmlFor="payMethod1">Nạp tiền qua thẻ tín dụng</label>
                                     </div>
                                     <div className="p-field-radiobutton">
-                                        <RadioButton inputId="payMethod2" name="payMethod" value="ATM" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'ATM'} />
+                                        <RadioButton inputId="payMethod2" disabled={true} name="payMethod" value="ATM" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'ATM'} />
                                         <label htmlFor="payMethod2">Nạp tiền qua thẻ ATM nội địa/Internet Banking (Miễn phí thanh toán)</label>
                                     </div>
                                     <div className="p-field-radiobutton">
-                                        <RadioButton inputId="payMethod3" name="payMethod" value="EW" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'EW'} />
+                                        <RadioButton inputId="payMethod3" disabled={true} name="payMethod" value="EW" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'EW'} />
                                         <label htmlFor="payMethod3">Nạp tiền qua ví điện tử (VNPAY, MOMO, ZALOPAY)</label>
                                     </div>
                                     <div className="p-field-radiobutton">
