@@ -1,0 +1,17 @@
+.container {
+    display: flex;              /* establish flex container */
+    background-color: white;
+    .box {
+        margin: auto;
+        .header {
+        }
+        .body {
+            .steps-header {
+            }
+            .steps-content {
+                .step-1 {
+                }
+            }
+        }
+    }
+}
