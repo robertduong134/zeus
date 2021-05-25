@@ -28,15 +28,17 @@ export default class NiceNumber extends Component {
     render() {
         return (
             <div className="container">
-                <div className="box header">
-                    <h1>Đăng ký tài khoản số đẹp VETC</h1>
-                    <br></br>
-                </div>
 
-                <div className="box body">
+                <aside class="container_sidebar">
+                    ĐĂNG KÝ TÀI KHOẢN SỐ ĐẸP VETC
+                </aside>
+
+                <main class="container_main">
+
                     <div className="steps-header">
                         <Steps model={this.items} />
                     </div>
+
                     <div className="steps-content">
                         <div className="step-1">
                             <div className="p-field p-grid">
@@ -56,7 +58,7 @@ export default class NiceNumber extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </main>
                 
             </div>
         );

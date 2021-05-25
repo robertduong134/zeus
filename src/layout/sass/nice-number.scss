@@ -1,17 +1,27 @@
 .container {
-    display: flex;              /* establish flex container */
+    display: flex;
     background-color: white;
-    .box {
-        margin: auto;
-        .header {
+    height: 100%;
+    .container_sidebar {
+        width: 30%;
+        background-color: #f5f7f8;
+        padding: 20px;
+    }
+    .container_main {
+        /* Take the remaining width */
+        flex: 1;
+    
+        /* Make it scrollable */
+        overflow: auto;
+        padding: 20px;
+        .steps-header{
+
         }
-        .body {
-            .steps-header {
-            }
-            .steps-content {
-                .step-1 {
-                }
-            }
+        .steps-content{
+            margin-top: 20px;
         }
     }
 }
+
+
+
