@@ -29,37 +29,40 @@ export default class NiceNumber extends Component {
         return (
             <div className="container">
 
-                <aside class="container_sidebar">
+                <div class="container_sidebar">
                     ĐĂNG KÝ TÀI KHOẢN SỐ ĐẸP VETC
-                </aside>
+                </div>
 
-                <main class="container_main">
-
-                    <div className="steps-header">
-                        <Steps model={this.items} />
-                    </div>
-
-                    <div className="steps-content">
-                        <div className="step-1">
-                            <div className="p-field p-grid">
-                                <label htmlFor="firstname3" className="p-col-fixed" style={{width:'100px'}}>Số tài khoản</label>
-                                <div className="p-col">
-                                    <InputText id="firstname3" type="text"/>
+                <div class="container_main">
+                    <div className="steps">
+                        <div className="header">
+                            <Steps model={this.items} />
+                        </div>
+                        <div className="content">
+                            <div className="step-1">
+                                <div className="p-field">
+                                    <h3>Bước 1: Chọn số đẹp</h3>
                                 </div>
-                            </div>
-                            <div className="p-field p-grid">
-                                <label htmlFor="lastname3" className="p-col-fixed" style={{width:'100px'}}>Mã giới thiệu</label>
-                                <div className="p-col">
-                                    <InputText id="lastname3" type="text"/>
+                                <div className="p-field p-grid">
+                                    <label htmlFor="firstname3" className="p-col-fixed" style={{width:'100px'}}>Số tài khoản</label>
+                                    <div className="p-col">
+                                        <InputText id="firstname3" type="text"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="p-field">
-                                <Button label="Tiếp theo"></Button>
+                                <div className="p-field p-grid">
+                                    <label htmlFor="lastname3" className="p-col-fixed" style={{width:'100px'}}>Mã giới thiệu</label>
+                                    <div className="p-col">
+                                        <InputText id="lastname3" type="text"/>
+                                    </div>
+                                </div>
+                                <div className="p-field">
+                                    <Button label="Tiếp theo"></Button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </main>
-                
+                </div>
+            
             </div>
         );
     }

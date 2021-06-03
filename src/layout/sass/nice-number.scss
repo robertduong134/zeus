@@ -10,15 +10,22 @@
     .container_main {
         /* Take the remaining width */
         flex: 1;
-    
         /* Make it scrollable */
         overflow: auto;
         padding: 20px;
-        .steps-header{
+        .steps {
+            .header {
 
-        }
-        .steps-content{
-            margin-top: 20px;
+            }
+            .content {
+                height: 30vh; /* Magic here */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .step-1{
+                    
+                }
+            }
         }
     }
 }
