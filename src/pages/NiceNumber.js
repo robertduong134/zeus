@@ -19,8 +19,8 @@ export default class NiceNumber extends Component {
         this.state = {
             activeStep: 'select',
             activeIndex: 0,
-            accountNumber: null,
-            referalCode: null,
+            niceNumber: null,
+            referralCode: null,
             approve1: false,
             approve2: false,
             name: null,
@@ -75,15 +75,15 @@ export default class NiceNumber extends Component {
                             <div className={classNames("body select-number-form", {'active-step' : this.state.activeStep === 'select'})}>
                                 <div className="p-fluid">
                                     <div className="p-field">
-                                        <label htmlFor="accountNumber" className="p-col-fixed" style={{width:'250px'}}>SỐ TÀI KHOẢN</label>
+                                        <label htmlFor="niceNumber" className="p-col-fixed" style={{width:'250px'}}>SỐ TÀI KHOẢN</label>
                                         <div className="p-inputgroup">
-                                        <InputMask className="p-inputtext" id="accountNumber" mask="E02-9999-9999" value={this.state.accountNumber} placeholder="E02-9999-9999" onChange={(e) => this.setState({accountNumber: e.value})}></InputMask>
+                                        <InputMask className="p-inputtext" id="niceNumber" mask="E02-9999-9999" value={this.state.niceNumber} placeholder="E02-9999-9999" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
                                         <Button icon="pi pi-search" className="p-button-success"/>
                                     </div>
                                     </div>
                                     <div className="p-field">
-                                        <label htmlFor="referalCode" className="p-col-fixed" style={{width:'250px'}}>MÃ GIỚI THIỆU</label>
-                                        <InputText id="referalCode" value={this.state.referalCode} onChange={(e) => this.setState({referalCode: e.target.value})} placeholder="VETC568ABZ"></InputText>
+                                        <label htmlFor="referralCode" className="p-col-fixed" style={{width:'250px'}}>MÃ GIỚI THIỆU</label>
+                                        <InputText id="referralCode" value={this.state.referralCode} onChange={(e) => this.setState({referralCode: e.target.value})} placeholder="VETC568ABZ"></InputText>
                                     </div>
                                     <div className="p-field">
                                         <div className="list-detail">
@@ -126,11 +126,18 @@ export default class NiceNumber extends Component {
                                     </div>
                                 </div>
                                 <div className="p-field">
-                                <Button className="p-button-success" label="ĐĂNG KÝ" onClick={() => this.setState({activeStep: 'payment', activeIndex: 2})} />
+                                <Button className="p-button-success" label="TIẾP THEO" onClick={() => this.setState({activeStep: 'payment', activeIndex: 2})} />
                                 </div>
                             </div>
                             <div className={classNames("body payment-form", {'active-step' : this.state.activeStep === 'payment'})}>
                                 <div className="p-fluid">
+                                    <div className="p-field">
+                                        <div className="list-detail">
+                                            <span><b>LƯU Ý: ĐĂNG KÝ SỐ ĐẸP SẼ CHỈ CÓ HIỆU LỰC SAU KHI NẠP TIỀN THÀNH CÔNG</b></span>
+                                            <br></br>
+                                            <span>Khoản tiền thanh toán sẽ được nạp tự động vào tài khoản VETC sau khi kích hoạt thành công</span>
+                                        </div>
+                                    </div>
                                     <div className="p-field-radiobutton">
                                         <RadioButton inputId="payMethod1" name="payMethod" value="CC" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'CC'} />
                                         <label htmlFor="payMethod1">Nạp tiền qua thẻ tín dụng</label>
@@ -158,7 +165,7 @@ export default class NiceNumber extends Component {
                                     </div>
                                 </div> 
                                 <div className="p-field">
-                                    <Button className="p-button-success" label="Nạp tiền" onClick={this.onPaymentClick}></Button>
+                                    <Button className="p-button-success" label="ĐĂNG KÝ" onClick={this.onPaymentClick}></Button>
                                 </div>
                             </div>
                         </div>
