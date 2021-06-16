@@ -26,7 +26,7 @@ export default class NiceNumber extends Component {
             name: null,
             phone: null,
             email: null,
-            payMethod: null
+            payMethod: 'TF'
         };
 
         this.items = [
@@ -110,7 +110,7 @@ export default class NiceNumber extends Component {
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="phone" className="p-col-fixed" style={{width:'250px'}}>SỐ ĐIỆN THOẠI</label>
-                                        <InputText id="phone" value={this.state.phone} placeholder="0988777666" onChange={(e) => this.setState({phone: e.target.value})}/>
+                                        <InputText id="phone" value={this.state.phone} placeholder="0988777666" maxLength="10" onChange={(e) => this.setState({phone: e.target.value})}/>
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="email" className="p-col-fixed" style={{width:'250px'}}>EMAIL</label>
@@ -139,15 +139,15 @@ export default class NiceNumber extends Component {
                                         </div>
                                     </div>
                                     <div className="p-field-radiobutton">
-                                        <RadioButton inputId="payMethod1" name="payMethod" value="CC" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'CC'} />
+                                        <RadioButton inputId="payMethod1" disabled={true} name="payMethod" value="CC" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'CC'} />
                                         <label htmlFor="payMethod1">Nạp tiền qua thẻ tín dụng</label>
                                     </div>
                                     <div className="p-field-radiobutton">
-                                        <RadioButton inputId="payMethod2" name="payMethod" value="ATM" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'ATM'} />
+                                        <RadioButton inputId="payMethod2" disabled={true} name="payMethod" value="ATM" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'ATM'} />
                                         <label htmlFor="payMethod2">Nạp tiền qua thẻ ATM nội địa/Internet Banking (Miễn phí thanh toán)</label>
                                     </div>
                                     <div className="p-field-radiobutton">
-                                        <RadioButton inputId="payMethod3" name="payMethod" value="EW" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'EW'} />
+                                        <RadioButton inputId="payMethod3" disabled={true} name="payMethod" value="EW" onChange={(e) => this.setState({payMethod: e.value})} checked={this.state.payMethod === 'EW'} />
                                         <label htmlFor="payMethod3">Nạp tiền qua ví điện tử (VNPAY, MOMO, ZALOPAY)</label>
                                     </div>
                                     <div className="p-field-radiobutton">
