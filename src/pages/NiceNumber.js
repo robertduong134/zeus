@@ -54,7 +54,12 @@ export default class NiceNumber extends Component {
     }
 
     onPaymentClick() {
-        this.toast.show({severity: 'success', summary: 'Success', detail: 'Hoàn thành'});
+        this.toast.show({severity: 'success', summary: 'Success', detail: 'Bạn sẽ được chuyển sang trang thanh toán của nhà cung cấp, vui lòng đợi trong giây lát'});
+        setTimeout(() => {
+            window.location.assign('http://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=10000000&vnp_BankCode=NCB&vnp_Command=pay&vnp_CreateDate=20170829103111&vnp_CurrCode=VND&vnp_IpAddr=172.16.68.68&vnp_Locale=vn&vnp_Merchant=DEMO&vnp_OrderInfo=Nap+tien+cho+thue+bao+0123456789.+So+tien+100%2c000&vnp_OrderType=topup&vnp_ReturnUrl=http%3a%2f%2fsandbox.vnpayment.vn%2ftryitnow%2fHome%2fVnPayReturn&vnp_TmnCode=2QXUI4J4&vnp_TxnRef=23554&vnp_Version=2&vnp_SecureHashType=SHA256&vnp_SecureHash=e6ce09ae6695ad034f8b6e6aadf2726f');
+        }, 
+        2000);
+        
     }
 
     render() {
@@ -132,7 +137,7 @@ export default class NiceNumber extends Component {
                             <div className={classNames("body payment-form", {'active-step' : this.state.activeStep === 'payment'})}>
                                 <div className="p-fluid">
                                     <div className="p-field">
-                                        <div className="list-detail">
+                                        <div className="list-warning-payment">
                                             <span><b>LƯU Ý: ĐĂNG KÝ SỐ ĐẸP SẼ CHỈ CÓ HIỆU LỰC SAU KHI NẠP TIỀN THÀNH CÔNG</b></span>
                                             <br></br>
                                             <span>Khoản tiền thanh toán sẽ được nạp tự động vào tài khoản VETC sau khi kích hoạt thành công</span>
