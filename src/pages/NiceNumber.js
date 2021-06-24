@@ -3,14 +3,13 @@ import { Steps } from 'primereact/steps';
 import { InputText } from 'primereact/inputtext';
 import 'primeflex/primeflex.css';
 import { Button } from 'primereact/button';
-import { Captcha } from 'primereact/captcha';
 import classNames from 'classnames';
 import { Checkbox } from 'primereact/checkbox';
 import { RadioButton } from 'primereact/radiobutton';
 import logo from "../layout/images/logo-vetc.png";
 import { Toast } from 'primereact/toast';
 import { InputMask } from 'primereact/inputmask';
-
+import NiceNumberService from '../service/NiceNumberService';
 
 export default class NiceNumber extends Component {
 
@@ -19,14 +18,15 @@ export default class NiceNumber extends Component {
         this.state = {
             activeStep: 'select',
             activeIndex: 0,
-            niceNumber: null,
-            referralCode: null,
+            niceNumber: '',
+            referralCode: '',
             approve1: false,
             approve2: false,
-            name: null,
-            phone: null,
-            email: null,
-            payMethod: 'VNPAY'
+            name: '',
+            phone: '',
+            email: '',
+            payMethod: 'VNPAY',
+            disableNextSelectNiceNumber : true
         };
 
         this.items = [
@@ -50,31 +50,140 @@ export default class NiceNumber extends Component {
             }
         ];
 
-        this.onPaymentClick = this.onPaymentClick.bind(this);
+        this.onRegisterClick = this.onRegisterClick.bind(this);
+        this.onCheckNiceNumberClick = this.onCheckNiceNumberClick.bind(this);
+        this.onNextSelectForm = this.onNextSelectForm.bind(this);
+        this.onSelectStepHeader = this.onSelectStepHeader.bind(this);
+        this.onNextContactForm = this.onNextContactForm.bind(this);
     }
 
-    onPaymentClick() {
+    showError(detailMessage) {
+        this.toast.show({severity: 'error', summary: 'Lỗi', detail: detailMessage});
+    }
+
+    showSuccess(detailMessage) {
+        this.toast.show({severity: 'success', summary: 'Thông báo', detail: detailMessage});
+    }
+
+    showWarn(detailMessage) {
+        this.toast.show({severity: 'warn', summary: 'Cảnh báo', detail: detailMessage});
+    }
+
+    validateSelectForm() {
+        if (this.state.niceNumber === undefined || this.state.niceNumber === '') {
+            this.showError('Số tài khoản không được để trống!');
+            return false;
+        }
+        return true;
+    }
+
+    validateContactForm() {
+        if (this.state.name === undefined || this.state.name === '') {
+            this.showError('Họ và tên không được để trống!');
+            return false;
+        }
+        if (this.state.phone === undefined || this.state.phone === '') {
+            this.showError('Số điện thoại không được để trống!');
+            return false;
+        }
+        var regexpPhone = /^\d{10,11}$/;
+        if (!regexpPhone.test(this.state.phone)) {
+            this.showError('Số điện thoại không hợp lệ!');
+            return false;
+        }
+        if (this.state.email === undefined || this.state.email === '') {
+            this.showError('Email không được để trống!');
+            return false;
+        }
+        var regexpEmail = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        if (!regexpEmail.test(this.state.email)) {
+            this.showError('Email không hợp lệ!');
+            return false;
+        }
+        if (!this.state.approve1 || !this.state.approve2) {
+            this.showError('Bạn phải đồng ý với các điều khoản để có thể tiếp tục!');
+            return false;
+        }
+        return true;
+    }
+
+    onNextContactForm() {
+        if (!this.validateContactForm()) {
+            return
+        }else{
+            this.setState({activeStep: 'payment', activeIndex: 2});
+        }
+    }
+
+    onCheckNiceNumberClick() {
+        if (!this.validateSelectForm()) {
+            return
+        }else {
+            NiceNumberService.check(this.state.niceNumber)
+            .then(response => {
+                const niceNumberStatus = response.body.data.status;
+                if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
+                    this.setState({ disableNextSelectNiceNumber: false });
+                    this.showSuccess('Số tài khoản chưa được đăng ký');
+                }else{
+                    this.setState({ disableNextSelectNiceNumber: true });
+                    this.showWarn('Số tài khoản đã được đăng ký');
+                }
+            })
+            .catch(error => {
+                // console.error('There was an error!', error.response.data.message);
+                this.setState({ disableNextSelectNiceNumber: true });
+                this.showError(error.response.data.message);
+            });
+        }
+    }
+
+    onNextSelectForm() {
+        if (!this.validateSelectForm()) {
+            return
+        }else {
+            NiceNumberService.check(this.state.niceNumber)
+                            .then(response => {
+                                const niceNumberStatus = response.body.data.status;
+                                if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
+                                    this.setState({activeStep: 'contact', activeIndex: 1 });
+                                }else{
+                                    this.setState({ disableNextSelectNiceNumber: true });
+                                    this.showWarn('Số tài khoản đã được đăng ký');
+                                }
+                            })
+                            .catch(error => {
+                                this.setState({ disableNextSelectNiceNumber: true });
+                                this.showError(error.response.data.message);
+                            });
+            }
+    }
+
+    onRegisterClick() {
         this.toast.show({severity: 'success', summary: 'Success', detail: 'Bạn sẽ được chuyển sang trang thanh toán của nhà cung cấp, vui lòng đợi trong giây lát'});
         setTimeout(() => {
             window.location.assign('http://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=10000000&vnp_BankCode=NCB&vnp_Command=pay&vnp_CreateDate=20170829103111&vnp_CurrCode=VND&vnp_IpAddr=172.16.68.68&vnp_Locale=vn&vnp_Merchant=DEMO&vnp_OrderInfo=Nap+tien+cho+thue+bao+0123456789.+So+tien+100%2c000&vnp_OrderType=topup&vnp_ReturnUrl=http%3a%2f%2fsandbox.vnpayment.vn%2ftryitnow%2fHome%2fVnPayReturn&vnp_TmnCode=2QXUI4J4&vnp_TxnRef=23554&vnp_Version=2&vnp_SecureHashType=SHA256&vnp_SecureHash=e6ce09ae6695ad034f8b6e6aadf2726f');
         }, 
         2000);
-        
+    }
+
+    onSelectStepHeader(e){
+        this.setState({ activeIndex: e.index });
     }
 
     render() {
         return (
             <div className="container">
                 <Toast ref={(el) => this.toast = el}></Toast>
-                <div class="container_sidebar">
+                <div className="container_sidebar">
                     <div className="logo">
                         <img src={logo} alt="babylon-layout" style={{cursor: 'pointer'}}/>
                     </div>
                 </div>
-                <div class="container_main">
+                <div className="container_main">
                     <div className="steps">
                         <div className="header">
-                        <Steps model={this.items} activeIndex={this.state.activeIndex} onSelect={(e) => this.setState({ activeIndex: e.index })} readOnly={false} />
+                        <Steps model={this.items} activeIndex={this.state.activeIndex} onSelect={this.onSelectStepHeader} readOnly={false} />
                         </div>
                         <div className="body">
                             <div className={classNames("body select-number-form", {'active-step' : this.state.activeStep === 'select'})}>
@@ -82,13 +191,13 @@ export default class NiceNumber extends Component {
                                     <div className="p-field">
                                         <label htmlFor="niceNumber" className="p-col-fixed" style={{width:'250px'}}>SỐ TÀI KHOẢN</label>
                                         <div className="p-inputgroup">
-                                        <InputMask className="p-inputtext" id="niceNumber" mask="E02-9999-9999" value={this.state.niceNumber} placeholder="E02-9999-9999" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
-                                        <Button icon="pi pi-search" className="p-button-success"/>
+                                        <InputMask className="p-inputtext" id="niceNumber" mask="E0299999999" value={this.state.niceNumber} placeholder="Nhập số tài khoản" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
+                                        <Button icon="pi pi-search" className="p-button-success" onClick={this.onCheckNiceNumberClick}/>
                                     </div>
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="referralCode" className="p-col-fixed" style={{width:'250px'}}>MÃ GIỚI THIỆU</label>
-                                        <InputText id="referralCode" value={this.state.referralCode} onChange={(e) => this.setState({referralCode: e.target.value})} placeholder="VETC568ABZ"></InputText>
+                                        <InputText id="referralCode" value={this.state.referralCode} onChange={(e) => this.setState({referralCode: e.target.value})} placeholder="Nhập mã giới thiệu"></InputText>
                                     </div>
                                     <div className="p-field">
                                         <div className="list-detail">
@@ -99,27 +208,27 @@ export default class NiceNumber extends Component {
                                             <span>- MIỄN PHÍ nạp tiền vào tài khoản VETC</span>
                                         </div>
                                     </div>
-                                    <div className="p-field">
+                                    {/* <div className="p-field">
                                         <Captcha siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" onResponse={this.showResponse} />
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="p-field">
-                                    <Button className="p-button-success" label="TIẾP THEO" onClick={() => this.setState({activeStep: 'contact', activeIndex: 1})} />
+                                    <Button className="p-button-success" disabled={this.state.disableNextSelectNiceNumber} label="TIẾP THEO" onClick={this.onNextSelectForm} />
                                 </div>
                             </div>
                             <div className={classNames("body contact-form", {'active-step' : this.state.activeStep === 'contact'})}>
                                 <div className="p-fluid">
                                     <div className="p-field">
                                         <label htmlFor="name" className="p-col-fixed" style={{width:'250px'}}>HỌ VÀ TÊN</label>
-                                        <InputText id="name" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})} placeholder="Nguyễn Văn A" />
+                                        <InputText id="name" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})} placeholder="Nhập họ và tên" />
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="phone" className="p-col-fixed" style={{width:'250px'}}>SỐ ĐIỆN THOẠI</label>
-                                        <InputText id="phone" value={this.state.phone} placeholder="0988777666" maxLength="10" onChange={(e) => this.setState({phone: e.target.value})}/>
+                                        <InputText id="phone" value={this.state.phone} placeholder="Nhập số điện thoại" maxLength="10" onChange={(e) => this.setState({phone: e.target.value})}/>
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="email" className="p-col-fixed" style={{width:'250px'}}>EMAIL</label>
-                                        <InputText id="email" value={this.state.email} placeholder="vetc@gmail.com" onChange={(e) => this.setState({email: e.target.value})}/>
+                                        <InputText id="email" value={this.state.email} placeholder="Nhập email" onChange={(e) => this.setState({email: e.target.value})}/>
                                     </div>
                                     <div className="p-field-checkbox">
                                         <Checkbox inputId="cb1" checked={this.state.approve1} onChange={e => this.setState({approve1: e.checked})} />
@@ -131,7 +240,7 @@ export default class NiceNumber extends Component {
                                     </div>
                                 </div>
                                 <div className="p-field">
-                                <Button className="p-button-success" label="TIẾP THEO" onClick={() => this.setState({activeStep: 'payment', activeIndex: 2})} />
+                                <Button className="p-button-success" label="TIẾP THEO" onClick={this.onNextContactForm} />
                                 </div>
                             </div>
                             <div className={classNames("body payment-form", {'active-step' : this.state.activeStep === 'payment'})}>
@@ -162,7 +271,7 @@ export default class NiceNumber extends Component {
                                     </div>
                                 </div> 
                                 <div className="p-field">
-                                    <Button className="p-button-success" label="ĐĂNG KÝ" onClick={this.onPaymentClick}></Button>
+                                    <Button className="p-button-success" label="ĐĂNG KÝ" onClick={this.onRegisterClick}></Button>
                                 </div>
                             </div>
                         </div>
