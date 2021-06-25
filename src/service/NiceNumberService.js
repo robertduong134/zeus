@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3333/api/v1/";
+const API_URL = "http://10.6.9.45:3333/api/v1/";
 
 export class NiceNumberService {
 
