@@ -9,7 +9,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import logo from "../layout/images/logo-vetc.png";
 import { Toast } from 'primereact/toast';
 import { InputMask } from 'primereact/inputmask';
-import NiceNumberService from '../service/NiceNumberService';
+import { NiceNumberService } from '../service/NiceNumberService';
 
 export default class NiceNumber extends Component {
 
@@ -26,7 +26,7 @@ export default class NiceNumber extends Component {
             phone: '',
             email: '',
             payMethod: 'VNPAY',
-            disableNextSelectNiceNumber : true
+            disableRegisterButton: false
         };
 
         this.items = [
@@ -50,6 +50,7 @@ export default class NiceNumber extends Component {
             }
         ];
 
+        this.niceNumberService = new NiceNumberService();
         this.onRegisterClick = this.onRegisterClick.bind(this);
         this.onCheckNiceNumberClick = this.onCheckNiceNumberClick.bind(this);
         this.onNextSelectForm = this.onNextSelectForm.bind(this);
@@ -101,7 +102,7 @@ export default class NiceNumber extends Component {
             return false;
         }
         if (!this.state.approve1 || !this.state.approve2) {
-            this.showError('Bạn phải đồng ý với các điều khoản để có thể tiếp tục!');
+            this.showError('Bạn phải đồng ý với các cam kết và điều khoản để có thể tiếp tục!');
             return false;
         }
         return true;
@@ -119,20 +120,18 @@ export default class NiceNumber extends Component {
         if (!this.validateSelectForm()) {
             return
         }else {
-            NiceNumberService.check(this.state.niceNumber)
+            this.niceNumberService.check(this.state.niceNumber)
             .then(response => {
                 const niceNumberStatus = response.body.data.status;
                 if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
-                    this.setState({ disableNextSelectNiceNumber: false });
                     this.showSuccess('Số tài khoản chưa được đăng ký');
                 }else{
-                    this.setState({ disableNextSelectNiceNumber: true });
                     this.showWarn('Số tài khoản đã được đăng ký');
                 }
             })
             .catch(error => {
                 // console.error('There was an error!', error.response.data.message);
-                this.setState({ disableNextSelectNiceNumber: true });
+                this.setState({ disableNextSelectForm: true });
                 this.showError(error.response.data.message);
             });
         }
@@ -142,29 +141,39 @@ export default class NiceNumber extends Component {
         if (!this.validateSelectForm()) {
             return
         }else {
-            NiceNumberService.check(this.state.niceNumber)
+            this.niceNumberService.check(this.state.niceNumber)
                             .then(response => {
                                 const niceNumberStatus = response.body.data.status;
                                 if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
                                     this.setState({activeStep: 'contact', activeIndex: 1 });
                                 }else{
-                                    this.setState({ disableNextSelectNiceNumber: true });
                                     this.showWarn('Số tài khoản đã được đăng ký');
                                 }
                             })
                             .catch(error => {
-                                this.setState({ disableNextSelectNiceNumber: true });
                                 this.showError(error.response.data.message);
                             });
             }
     }
 
     onRegisterClick() {
-        this.toast.show({severity: 'success', summary: 'Success', detail: 'Bạn sẽ được chuyển sang trang thanh toán của nhà cung cấp, vui lòng đợi trong giây lát'});
-        setTimeout(() => {
-            window.location.assign('http://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=10000000&vnp_BankCode=NCB&vnp_Command=pay&vnp_CreateDate=20170829103111&vnp_CurrCode=VND&vnp_IpAddr=172.16.68.68&vnp_Locale=vn&vnp_Merchant=DEMO&vnp_OrderInfo=Nap+tien+cho+thue+bao+0123456789.+So+tien+100%2c000&vnp_OrderType=topup&vnp_ReturnUrl=http%3a%2f%2fsandbox.vnpayment.vn%2ftryitnow%2fHome%2fVnPayReturn&vnp_TmnCode=2QXUI4J4&vnp_TxnRef=23554&vnp_Version=2&vnp_SecureHashType=SHA256&vnp_SecureHash=e6ce09ae6695ad034f8b6e6aadf2726f');
-        }, 
-        2000);
+        this.niceNumberService.register(this.state.niceNumber, this.state.referralCode, this.state.name, this.state.phone, this.state.email, this.state.payMethod)
+                                .then(response => {
+                                    const vnPayUrl = response.body.data.vnPayUrl;
+                                    if (vnPayUrl === undefined || vnPayUrl === '') {
+                                        this.showError('Đã có lỗi trong quá trình đăng ký, vui lòng thử lại!');
+                                    }else{
+                                        this.setState({disableRegisterButton: true});
+                                        this.showSuccess('Bạn sẽ được chuyển sang trang thanh toán của nhà cung cấp, vui lòng đợi trong giây lát!');
+                                        setTimeout(() => {
+                                            window.location.assign(vnPayUrl);
+                                        }, 
+                                        3000);
+                                    }
+                                })
+                                .catch(error => {
+                                    this.showError(error.response.data.message);
+                                })
     }
 
     onSelectStepHeader(e){
@@ -183,7 +192,7 @@ export default class NiceNumber extends Component {
                 <div className="container_main">
                     <div className="steps">
                         <div className="header">
-                        <Steps model={this.items} activeIndex={this.state.activeIndex} onSelect={this.onSelectStepHeader} readOnly={false} />
+                        <Steps model={this.items} activeIndex={this.state.activeIndex} onSelect={this.onSelectStepHeader} readOnly={true} />
                         </div>
                         <div className="body">
                             <div className={classNames("body select-number-form", {'active-step' : this.state.activeStep === 'select'})}>
@@ -213,7 +222,7 @@ export default class NiceNumber extends Component {
                                     </div> */}
                                 </div>
                                 <div className="p-field">
-                                    <Button className="p-button-success" disabled={this.state.disableNextSelectNiceNumber} label="TIẾP THEO" onClick={this.onNextSelectForm} />
+                                    <Button className="p-button-success" label="TIẾP THEO" onClick={this.onNextSelectForm} />
                                 </div>
                             </div>
                             <div className={classNames("body contact-form", {'active-step' : this.state.activeStep === 'contact'})}>
@@ -271,7 +280,7 @@ export default class NiceNumber extends Component {
                                     </div>
                                 </div> 
                                 <div className="p-field">
-                                    <Button className="p-button-success" label="ĐĂNG KÝ" onClick={this.onRegisterClick}></Button>
+                                    <Button className="p-button-success" label="ĐĂNG KÝ" disabled={this.state.disableRegisterButton} onClick={this.onRegisterClick}></Button>
                                 </div>
                             </div>
                         </div>

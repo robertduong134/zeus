@@ -2,15 +2,30 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3333/api/v1/";
 
-class NiceNumberService {
+export class NiceNumberService {
 
     check(niceNumber){
-        return axios.post(API_URL + "nice-number/check", {niceNumber})
-                    .then(response => {return response.data});
+        return axios
+                .post(API_URL + "nice-number/check", {
+                    niceNumber
+                })
+                .then(response => {
+                    return response.data
+                });
     }
 
-    register(){
-
+    register(niceNumber, referralCode, name, phone, email, payMethod){
+        return axios.post(API_URL + "nice-number/register", {
+            niceNumber,
+            referralCode,
+            name,
+            phone,
+            email,
+            payMethod
+        })
+        .then(response => {
+            return response.data
+        });
     }
 }
 
