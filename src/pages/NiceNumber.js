@@ -15,18 +15,27 @@ export default class NiceNumber extends Component {
 
     constructor(props) {
         super(props);
+        const queryParams = new URLSearchParams(window.location.search);
+        const ref = queryParams.get('ref');
+        var disableRef = true;
+        if (ref === undefined || ref === '' || ref == null) {
+            disableRef = false;
+        }
         this.state = {
             activeStep: 'select',
             activeIndex: 0,
             niceNumber: '',
-            referralCode: '',
+            referralCode: ref === null ? '' : ref,
             approve1: false,
             approve2: false,
             name: '',
             phone: '',
             email: '',
             payMethod: 'VNPAY',
-            disableRegisterButton: false
+            disableRegisterButton: false,
+            disableReferralCode: disableRef,
+            niceNumberStatus: false,
+            niceNumberMessage: ''
         };
 
         this.items = [
@@ -43,7 +52,7 @@ export default class NiceNumber extends Component {
                 }
             },
             {
-                label: 'Nạp tiền',
+                label: 'Đăng ký',
                 command: (event) => {
                     this.setState({ activeStep: 'payment' });
                 }
@@ -109,8 +118,8 @@ export default class NiceNumber extends Component {
     }
 
     onNextContactForm() {
-        if (!this.validateContactForm()) {
-            return
+        if (!this.validateSelectForm() || !this.validateContactForm()) {
+            return;
         }else{
             this.setState({activeStep: 'payment', activeIndex: 2});
         }
@@ -118,15 +127,17 @@ export default class NiceNumber extends Component {
 
     onCheckNiceNumberClick() {
         if (!this.validateSelectForm()) {
-            return
+            return;
         }else {
             this.niceNumberService.check(this.state.niceNumber)
             .then(response => {
                 const niceNumberStatus = response.body.data.status;
                 if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
+                    this.setState({niceNumberMessage: 'Số tài khoản chưa được đăng ký', niceNumberStatus: true})
                     this.showSuccess('Số tài khoản chưa được đăng ký');
                 }else{
                     this.showWarn('Số tài khoản đã được đăng ký');
+                    this.setState({niceNumberMessage: 'Số tài khoản đã được đăng ký', niceNumberStatus: false})
                 }
             })
             .catch(error => {
@@ -139,7 +150,7 @@ export default class NiceNumber extends Component {
 
     onNextSelectForm() {
         if (!this.validateSelectForm()) {
-            return
+            return;
         }else {
             this.niceNumberService.check(this.state.niceNumber)
                             .then(response => {
@@ -148,6 +159,7 @@ export default class NiceNumber extends Component {
                                     this.setState({activeStep: 'contact', activeIndex: 1 });
                                 }else{
                                     this.showWarn('Số tài khoản đã được đăng ký');
+                                    this.setState({niceNumberMessage: 'Số tài khoản đã được đăng ký', niceNumberStatus: false})
                                 }
                             })
                             .catch(error => {
@@ -157,7 +169,14 @@ export default class NiceNumber extends Component {
     }
 
     onRegisterClick() {
-        this.niceNumberService.register(this.state.niceNumber, this.state.referralCode, this.state.name, this.state.phone, this.state.email, this.state.payMethod)
+        if(this.state.niceNumberStatus === false){
+            this.showError('Số tài khoản không hợp lệ, vui lòng nhập lại!');
+            return;
+        }
+        if(!this.validateSelectForm() || !this.validateContactForm()){
+            return;
+        }else{
+            this.niceNumberService.register(this.state.niceNumber, this.state.referralCode, this.state.name, this.state.phone, this.state.email, this.state.payMethod)
                                 .then(response => {
                                     const vnPayUrl = response.body.data.vnPayUrl;
                                     if (vnPayUrl === undefined || vnPayUrl === '') {
@@ -174,9 +193,11 @@ export default class NiceNumber extends Component {
                                 .catch(error => {
                                     this.showError(error.response.data.message);
                                 })
+        }
     }
 
     onSelectStepHeader(e){
+        console.log(e.index);
         this.setState({ activeIndex: e.index });
     }
 
@@ -192,7 +213,7 @@ export default class NiceNumber extends Component {
                 <div className="container_main">
                     <div className="steps">
                         <div className="header">
-                        <Steps model={this.items} activeIndex={this.state.activeIndex} onSelect={this.onSelectStepHeader} readOnly={true} />
+                        <Steps model={this.items} activeIndex={this.state.activeIndex} onSelect={this.onSelectStepHeader} readOnly={false} />
                         </div>
                         <div className="body">
                             <div className={classNames("body select-number-form", {'active-step' : this.state.activeStep === 'select'})}>
@@ -200,13 +221,14 @@ export default class NiceNumber extends Component {
                                     <div className="p-field">
                                         <label htmlFor="niceNumber" className="p-col-fixed" style={{width:'250px'}}>SỐ TÀI KHOẢN</label>
                                         <div className="p-inputgroup">
-                                        <InputMask className="p-inputtext" id="niceNumber" mask="E0299999999" value={this.state.niceNumber} placeholder="Nhập số tài khoản" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
-                                        <Button icon="pi pi-search" className="p-button-success" onClick={this.onCheckNiceNumberClick}/>
-                                    </div>
+                                            <InputMask className="p-inputtext" id="niceNumber" mask="E0299999999" value={this.state.niceNumber} placeholder="Nhập số tài khoản" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
+                                            <Button icon="pi pi-search" className="p-button-success" onClick={this.onCheckNiceNumberClick}/>
+                                        </div>
+                                        <small id="niceNumber-help">{this.state.niceNumberMessage}</small>
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="referralCode" className="p-col-fixed" style={{width:'250px'}}>MÃ GIỚI THIỆU</label>
-                                        <InputText id="referralCode" value={this.state.referralCode} onChange={(e) => this.setState({referralCode: e.target.value})} placeholder="Nhập mã giới thiệu"></InputText>
+                                        <InputText id="referralCode" disabled={this.state.disableReferralCode} value={this.state.referralCode} onChange={(e) => this.setState({referralCode: e.target.value})} placeholder="Nhập mã giới thiệu"></InputText>
                                     </div>
                                     <div className="p-field">
                                         <div className="list-detail">
@@ -254,6 +276,27 @@ export default class NiceNumber extends Component {
                             </div>
                             <div className={classNames("body payment-form", {'active-step' : this.state.activeStep === 'payment'})}>
                                 <div className="p-fluid">
+                                    <div className="p-field">
+                                        <span><b>THÔNG TIN ĐĂNG KÝ</b></span>
+                                        <br></br>
+                                        <br></br>
+                                        <span>Số tài khoản: {this.state.niceNumber}</span>
+                                        <br></br>
+                                        <br></br>
+                                        <span>Họ và tên: {this.state.name}</span>
+                                        <br></br>
+                                        <br></br>
+                                        <span>Số điện thoại: {this.state.phone}</span>
+                                        <br></br>
+                                        <br></br>
+                                        <span>Email: {this.state.email}</span>
+                                        <br></br>
+                                        <br></br>
+                                        <span>Phí đăng ký tài khoản: <b>MIỄN PHÍ</b></span>
+                                        <br></br>
+                                        <br></br>
+                                        <span>Số tiền nạp tối thiểu vào tài khoản: <b>200.000đ</b></span>
+                                    </div>
                                     <div className="p-field">
                                         <div className="list-warning-payment">
                                             <span><b>LƯU Ý: ĐĂNG KÝ SỐ ĐẸP SẼ CHỈ CÓ HIỆU LỰC SAU KHI NẠP TIỀN THÀNH CÔNG</b></span>

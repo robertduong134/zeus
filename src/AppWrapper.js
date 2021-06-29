@@ -7,6 +7,7 @@ import Error from './pages/Error';
 import NotFound from './pages/NotFound';
 import SignUp from './pages/SignUp';
 import NiceNumber from './pages/NiceNumber';
+import NiceNumberResult from './pages/NiceNumberResult';
 
 class AppWrapper extends Component {
     
@@ -24,6 +25,8 @@ class AppWrapper extends Component {
                 return <Route path="/sign-up" component={SignUp} />
             case "/nice-number":
                 return <Route path="/nice-number" component={NiceNumber} />
+            case "/nice-number-result":
+                return <Route path="/nice-number-result" component={NiceNumberResult} />
             case "/accessdenied":
                 return <Route path="/accessdenied" component={Access} />
             case "/error":
