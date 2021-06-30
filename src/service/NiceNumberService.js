@@ -27,6 +27,27 @@ export class NiceNumberService {
             return response.data
         });
     }
+
+    checkResult(vnpTmnCode, vnpAmount, vnpBankCode, vnpBankTranNo, vnpCardType, vnpPayDate, vnpOrderInfo, vnpTransactionNo, vnpResponseCode, vnpTxnRef, vnpSecureHashType, vnpSecureHash){
+        return axios.post(API_URL + "vnpay-transaction/check-result", {
+            vnpTmnCode,
+            vnpAmount,
+            vnpBankCode,
+            vnpBankTranNo,
+            vnpCardType,
+            vnpPayDate,
+            vnpOrderInfo,
+            vnpTransactionNo,
+            vnpResponseCode,
+            vnpTxnRef,
+            vnpSecureHashType,
+            vnpSecureHash
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data
+        });
+    }
 }
 
 export default new NiceNumberService();

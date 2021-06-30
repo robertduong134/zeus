@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NiceNumberService } from '../service/NiceNumberService';
 
 export default class NiceNumberResult extends Component {
 
@@ -31,8 +32,24 @@ export default class NiceNumberResult extends Component {
             vnpResponseCode: vnp_ResponseCode === null ? '' : vnp_ResponseCode,
             vnpTxnRef: vnp_TxnRef === null ? '' : vnp_TxnRef,
             vnpSecureHashType: vnp_SecureHashType === null ? '' : vnp_SecureHashType,
-            vnpSecureHash: vnp_SecureHash === null ? '' : vnp_SecureHash
+            vnpSecureHash: vnp_SecureHash === null ? '' : vnp_SecureHash,
+            transactionStatus : ''
         };
+
+        this.niceNumberService = new NiceNumberService();
+    }
+
+    componentDidMount() {
+        this.niceNumberService.checkResult(this.state.vnpTmnCode, this.state.vnpAmount, this.state.vnpBankCode, this.state.vnpBankTranNo, 
+            this.state.vnpCardType, this.state.vnpPayDate, this.state.vnpOrderInfo, this.state.vnp_TransactionNo,
+            this.state.vnpResponseCode, this.state.vnpTxnRef, this.state.vnpSecureHashType, this.state.vnpSecureHash)
+            .then(response => {
+                console.log(response);
+                this.setState({ transactionStatus: response.body.transactionStatus});
+            })
+            .catch(error => {
+                this.setState({ transactionStatus: 'Đã có lỗi xảy ra vui lòng liên hệ tổng đài 19006010 để kiểm tra trạng thái giao dịch!'});
+            });
     }
 
     render() {
@@ -77,6 +94,9 @@ export default class NiceNumberResult extends Component {
                         <br></br>
                         <br></br>
                         <span>vnpSecureHash: {this.state.vnpSecureHash}</span>
+                        <br></br>
+                        <br></br>
+                        <h1>Trạng thái giao dịch: {this.state.transactionStatus}</h1>
                     </div>
                 </div>
             </div>
