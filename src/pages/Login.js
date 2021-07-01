@@ -5,7 +5,6 @@ import { Checkbox } from "primereact/checkbox";
 import { Toast } from 'primereact/toast';
 import { Form } from "reactstrap";
 import AuthService from "../service/AuthService";
-import logo from "../layout/images/logo.svg"
 
 export default class Login extends Component {
 
@@ -86,7 +85,7 @@ export default class Login extends Component {
                         <div className="p-grid">
                             <Form onSubmit={this.handleLogin} >
                                 <div className="p-col-12 p-sm-6 p-md-6 logo-container">
-                                    <img src={logo} alt="sigma" />
+                                    <img src="/assets/layout/images/logo.svg" alt="sigma" />
                                     <span className="guest-sign-in">Welcome, please use the form to sign-in VETC network</span>
                                 </div>
                                 <div className="p-col-12 username-container">

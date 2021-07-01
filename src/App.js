@@ -26,8 +26,6 @@ import '@fullcalendar/timegrid/main.css';
 import './layout/layout.scss';
 import './App.scss';
 import PrivateRoute from './components/PrivateRoute';
-import logowhite from './layout/images/logo-white.svg';
-import logoblack from './layout/images/logo-white.svg';
 
 class App extends Component {
 
@@ -217,7 +215,7 @@ class App extends Component {
     }
 
     render() {
-        const logo = this.state.layoutColorMode === 'dark' ? logowhite: logoblack;
+        const logo = this.state.layoutColorMode === 'dark' ? "/assets/layout/images/logo-white.svg": "/assets/layout/images/logo-white.svg";
 
         const wrapperClass = classNames('layout-wrapper', {
             'layout-overlay': this.state.layoutMode === 'overlay',

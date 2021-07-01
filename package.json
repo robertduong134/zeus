@@ -1,7 +1,7 @@
 {
     "name": "zeus",
     "version": "0.0.1-SNAPSHOT",
-    "homepage": "/zeus",
+    "homepage": ".",
     "private": false,
     "repository": {
         "type": "git",

@@ -8,12 +8,6 @@ import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
 import { CascadeSelect } from 'primereact/cascadeselect';
 
-import logo from "../layout/images/logo-vetc.png";
-import bannerlogo from "../layout/images/extensions/babylon-icon.png";
-import hd1 from "../layout/images/extensions/bg-header.png";
-import hd2 from "../layout/images/extensions/bg-header-2.png";
-import hd3 from "../layout/images/extensions/bg-header-3.png";
-
 export default class SignUp extends Component {
 
     constructor() {
@@ -156,7 +150,7 @@ export default class SignUp extends Component {
             <div className="wizard-wrapper">
                 <div className="wizard-header">
                     <div className="wizard-logo">
-                        <img src={logo} alt="babylon-layout" style={{cursor: 'pointer'}}/>
+                        <img src="/assets/layout/images/logo-vetc.png" alt="babylon-layout" style={{cursor: 'pointer'}}/>
                     </div>
                 </div>
 
@@ -165,24 +159,24 @@ export default class SignUp extends Component {
                         <div className="wizard-card-header">
                             <div className="wizard-card-header-banner">
                                 <div className="banner-logo">
-                                    <img src={bannerlogo}
+                                    <img src="/assets/layout/images/extensions/babylon-icon.png"
                                         alt="babylon-layout" />
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-2", { 'active-banner': this.state.activeTab === 'tier' })}>
                                     <h1>Chọn số tài khoản VETC</h1>
-                                    <img src={hd2}
+                                    <img src="/assets/layout/images/extensions/bg-header-2.png"
                                         alt="babylon-layout" />
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-1", { 'active-banner': this.state.activeTab === 'register' })}>
                                     <h1>Đăng ký tài khoản VETC</h1>
-                                    <img src={hd1} alt="babylon-layout" />
+                                    <img src="/assets/layout/images/extensions/bg-header.png" alt="babylon-layout" />
                                 </div>
                                 <div
                                     className={classNames("banner-image banner-3", { 'active-banner': this.state.activeTab === 'payment' })}>
                                     <h1>Nạp tiền vào tài khoản VETC</h1>
-                                    <img src={hd3}
+                                    <img src="/assets/layout/images/extensions/bg-header-3.png"
                                         alt="babylon-layout" />
                                 </div>
                             </div>

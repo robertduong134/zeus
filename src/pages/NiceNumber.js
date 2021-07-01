@@ -6,7 +6,6 @@ import { Button } from 'primereact/button';
 import classNames from 'classnames';
 import { Checkbox } from 'primereact/checkbox';
 import { RadioButton } from 'primereact/radiobutton';
-import logo from "../layout/images/logo-vetc.png";
 import { Toast } from 'primereact/toast';
 import { InputMask } from 'primereact/inputmask';
 import { NiceNumberService } from '../service/NiceNumberService';
@@ -207,7 +206,7 @@ export default class NiceNumber extends Component {
                 <Toast ref={(el) => this.toast = el}></Toast>
                 <div className="container_sidebar">
                     <div className="logo">
-                        <img src={logo} alt="babylon-layout" style={{cursor: 'pointer'}}/>
+                        <img src="/assets/layout/images/logo-vetc.png" alt="babylon-layout" style={{cursor: 'pointer'}}/>
                     </div>
                 </div>
                 <div className="container_main">
