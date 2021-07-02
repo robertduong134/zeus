@@ -19,6 +19,8 @@ class AppWrapper extends Component {
 
     render() {
         switch (this.props.location.pathname) {
+            case "/health-check":
+                return <Route path="/health-check"><h3>RUNNING</h3></Route>
             case "/login":
                 return <Route path="/login" component={Login} />
             case "/sign-up":
