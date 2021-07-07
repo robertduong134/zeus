@@ -41,7 +41,7 @@ export default class NiceNumberResult extends Component {
 
     componentDidMount() {
         this.niceNumberService.checkResult(this.state.vnpTmnCode, this.state.vnpAmount, this.state.vnpBankCode, this.state.vnpBankTranNo, 
-            this.state.vnpCardType, this.state.vnpPayDate, this.state.vnpOrderInfo, this.state.vnp_TransactionNo,
+            this.state.vnpCardType, this.state.vnpPayDate, this.state.vnpOrderInfo, this.state.vnpTransactionNo,
             this.state.vnpResponseCode, this.state.vnpTxnRef, this.state.vnpSecureHashType, this.state.vnpSecureHash)
             .then(response => {
                 console.log(response);
