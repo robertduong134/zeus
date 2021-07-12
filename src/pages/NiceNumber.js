@@ -34,7 +34,13 @@ export default class NiceNumber extends Component {
             disableRegisterButton: false,
             disableReferralCode: disableRef,
             niceNumberStatus: false,
-            niceNumberMessage: ''
+            niceNumberMessage: '',
+
+            nameMessage: '',
+            nameStatus: false,
+
+            phoneMessage: '',
+            phoneStatus: false
         };
 
         this.items = [
@@ -80,7 +86,8 @@ export default class NiceNumber extends Component {
 
     validateSelectForm() {
         if (this.state.niceNumber === undefined || this.state.niceNumber === '') {
-            this.showError('Số tài khoản không được để trống!');
+            this.setState({niceNumberMessage: 'Số tài khoản không được để trống!', niceNumberStatus: false})
+            // this.showError('Số tài khoản không được để trống!');
             return false;
         }
         return true;
@@ -88,8 +95,11 @@ export default class NiceNumber extends Component {
 
     validateContactForm() {
         if (this.state.name === undefined || this.state.name === '') {
-            this.showError('Họ và tên không được để trống!');
+            this.setState({nameMessage: 'Họ và tên không được để trống!', nameStatus: false})
+            // this.showError('Họ và tên không được để trống!');
             return false;
+        }else{
+            this.setState({nameMessage: '', nameStatus: true})
         }
         if (this.state.phone === undefined || this.state.phone === '') {
             this.showError('Số điện thoại không được để trống!');
@@ -133,9 +143,9 @@ export default class NiceNumber extends Component {
                 const niceNumberStatus = response.body.data.status;
                 if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
                     this.setState({niceNumberMessage: 'Số tài khoản chưa được đăng ký', niceNumberStatus: true})
-                    this.showSuccess('Số tài khoản chưa được đăng ký');
+                    // this.showSuccess('Số tài khoản chưa được đăng ký');
                 }else{
-                    this.showWarn('Số tài khoản đã được đăng ký');
+                    // this.showWarn('Số tài khoản đã được đăng ký');
                     this.setState({niceNumberMessage: 'Số tài khoản đã được đăng ký', niceNumberStatus: false})
                 }
             })
@@ -157,7 +167,7 @@ export default class NiceNumber extends Component {
                                 if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
                                     this.setState({activeStep: 'contact', activeIndex: 1 });
                                 }else{
-                                    this.showWarn('Số tài khoản đã được đăng ký');
+                                    // this.showWarn('Số tài khoản đã được đăng ký');
                                     this.setState({niceNumberMessage: 'Số tài khoản đã được đăng ký', niceNumberStatus: false})
                                 }
                             })
@@ -200,6 +210,14 @@ export default class NiceNumber extends Component {
         this.setState({ activeIndex: e.index });
     }
 
+    getFormMessage(message, isError){
+        if(isError){
+            return <small className="p-error">{message}</small>
+        }else{
+            return <small className="p-info">{message}</small>
+        }
+    };
+
     render() {
         return (
             <div className="container">
@@ -223,7 +241,8 @@ export default class NiceNumber extends Component {
                                             <InputMask className="p-inputtext" id="niceNumber" mask="E0299999999" value={this.state.niceNumber} placeholder="Nhập số tài khoản" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
                                             <Button icon="pi pi-search" className="p-button-success" onClick={this.onCheckNiceNumberClick}/>
                                         </div>
-                                        <small id="niceNumber-help">{this.state.niceNumberMessage}</small>
+                                        {/* <small id="niceNumber-help">{this.state.niceNumberMessage}</small> */}
+                                        {this.getFormMessage(this.state.niceNumberMessage, !this.state.niceNumberStatus)}
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="referralCode" className="p-col-fixed" style={{width:'250px'}}>MÃ GIỚI THIỆU</label>
@@ -251,6 +270,7 @@ export default class NiceNumber extends Component {
                                     <div className="p-field">
                                         <label htmlFor="name" className="p-col-fixed" style={{width:'250px'}}>HỌ VÀ TÊN</label>
                                         <InputText id="name" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})} placeholder="Nhập họ và tên" />
+                                        {this.getFormMessage(this.state.nameMessage, !this.state.nameStatus)}
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="phone" className="p-col-fixed" style={{width:'250px'}}>SỐ ĐIỆN THOẠI</label>

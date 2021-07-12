@@ -81,11 +81,14 @@
 }
 @media screen and (max-width: 640px) {
     .container {
+        .container_sidebar {
+            display: none;
+        }
         .container_main {
             .steps {
                 .header {
                     .p-steps {
-                        height: 350px;
+                        height: 120px;
                         >ul {
                             flex-direction: column;
                             height: 100%;
@@ -123,6 +126,9 @@
                             }
                         }
                     }
+                }
+                .body {
+                    margin-top: 20px;
                 }
             }
         }
