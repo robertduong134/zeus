@@ -6,9 +6,9 @@ import { Button } from 'primereact/button';
 import classNames from 'classnames';
 import { Checkbox } from 'primereact/checkbox';
 import { RadioButton } from 'primereact/radiobutton';
-import { Toast } from 'primereact/toast';
 import { InputMask } from 'primereact/inputmask';
 import { NiceNumberService } from '../service/NiceNumberService';
+import { Messages } from 'primereact/messages';
 
 export default class NiceNumber extends Component {
 
@@ -34,13 +34,7 @@ export default class NiceNumber extends Component {
             disableRegisterButton: false,
             disableReferralCode: disableRef,
             niceNumberStatus: false,
-            niceNumberMessage: '',
-
-            nameMessage: '',
-            nameStatus: false,
-
-            phoneMessage: '',
-            phoneStatus: false
+            niceNumberMessage: ''
         };
 
         this.items = [
@@ -73,21 +67,21 @@ export default class NiceNumber extends Component {
     }
 
     showError(detailMessage) {
-        this.toast.show({severity: 'error', summary: 'Lỗi', detail: detailMessage});
+        this.messages.show({ severity: 'error', summary: '', detail: detailMessage });
     }
 
     showSuccess(detailMessage) {
-        this.toast.show({severity: 'success', summary: 'Thông báo', detail: detailMessage});
+        this.messages.show({ severity: 'success', summary: '', detail: detailMessage });
     }
 
     showWarn(detailMessage) {
-        this.toast.show({severity: 'warn', summary: 'Cảnh báo', detail: detailMessage});
+        this.messages.show({ severity: 'warn', summary: '', detail: detailMessage });
     }
 
     validateSelectForm() {
         if (this.state.niceNumber === undefined || this.state.niceNumber === '') {
-            this.setState({niceNumberMessage: 'Số tài khoản không được để trống!', niceNumberStatus: false})
-            // this.showError('Số tài khoản không được để trống!');
+            // this.setState({niceNumberMessage: 'Số tài khoản không được để trống!', niceNumberStatus: false})
+            this.showError('Số tài khoản không được để trống!');
             return false;
         }
         return true;
@@ -95,11 +89,9 @@ export default class NiceNumber extends Component {
 
     validateContactForm() {
         if (this.state.name === undefined || this.state.name === '') {
-            this.setState({nameMessage: 'Họ và tên không được để trống!', nameStatus: false})
-            // this.showError('Họ và tên không được để trống!');
+            // this.setState({nameMessage: 'Họ và tên không được để trống!', nameStatus: false})
+            this.showError('Họ và tên không được để trống!');
             return false;
-        }else{
-            this.setState({nameMessage: '', nameStatus: true})
         }
         if (this.state.phone === undefined || this.state.phone === '') {
             this.showError('Số điện thoại không được để trống!');
@@ -127,7 +119,7 @@ export default class NiceNumber extends Component {
     }
 
     onNextContactForm() {
-        if (!this.validateSelectForm() || !this.validateContactForm()) {
+        if (!this.validateContactForm() || !this.validateSelectForm()) {
             return;
         }else{
             this.setState({activeStep: 'payment', activeIndex: 2});
@@ -143,9 +135,9 @@ export default class NiceNumber extends Component {
                 const niceNumberStatus = response.body.data.status;
                 if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
                     this.setState({niceNumberMessage: 'Số tài khoản chưa được đăng ký', niceNumberStatus: true})
-                    // this.showSuccess('Số tài khoản chưa được đăng ký');
+                    this.showSuccess('Số tài khoản chưa được đăng ký!');
                 }else{
-                    // this.showWarn('Số tài khoản đã được đăng ký');
+                    this.showWarn('Số tài khoản đã được đăng ký!');
                     this.setState({niceNumberMessage: 'Số tài khoản đã được đăng ký', niceNumberStatus: false})
                 }
             })
@@ -167,7 +159,7 @@ export default class NiceNumber extends Component {
                                 if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
                                     this.setState({activeStep: 'contact', activeIndex: 1 });
                                 }else{
-                                    // this.showWarn('Số tài khoản đã được đăng ký');
+                                    this.showWarn('Số tài khoản đã được đăng ký!');
                                     this.setState({niceNumberMessage: 'Số tài khoản đã được đăng ký', niceNumberStatus: false})
                                 }
                             })
@@ -179,7 +171,7 @@ export default class NiceNumber extends Component {
 
     onRegisterClick() {
         if(this.state.niceNumberStatus === false){
-            this.showError('Số tài khoản không hợp lệ, vui lòng nhập lại!');
+            this.showError('Số tài khoản không hợp lệ, vui lòng kiểm tra lại!');
             return;
         }
         if(!this.validateSelectForm() || !this.validateContactForm()){
@@ -221,7 +213,6 @@ export default class NiceNumber extends Component {
     render() {
         return (
             <div className="container">
-                <Toast ref={(el) => this.toast = el}></Toast>
                 <div className="container_sidebar">
                     <div className="logo">
                         <img src="/assets/layout/images/logo-vetc.png" alt="babylon-layout" style={{cursor: 'pointer'}}/>
@@ -232,6 +223,7 @@ export default class NiceNumber extends Component {
                         <div className="header">
                         <Steps model={this.items} activeIndex={this.state.activeIndex} onSelect={this.onSelectStepHeader} readOnly={false} />
                         </div>
+                        <Messages ref={(el) => this.messages = el} />
                         <div className="body">
                             <div className={classNames("body select-number-form", {'active-step' : this.state.activeStep === 'select'})}>
                                 <div className="p-fluid">
@@ -270,7 +262,6 @@ export default class NiceNumber extends Component {
                                     <div className="p-field">
                                         <label htmlFor="name" className="p-col-fixed" style={{width:'250px'}}>HỌ VÀ TÊN</label>
                                         <InputText id="name" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})} placeholder="Nhập họ và tên" />
-                                        {this.getFormMessage(this.state.nameMessage, !this.state.nameStatus)}
                                     </div>
                                     <div className="p-field">
                                         <label htmlFor="phone" className="p-col-fixed" style={{width:'250px'}}>SỐ ĐIỆN THOẠI</label>
