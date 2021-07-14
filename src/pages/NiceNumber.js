@@ -230,7 +230,7 @@ export default class NiceNumber extends Component {
                                     <div className="p-field">
                                         <label htmlFor="niceNumber" className="p-col-fixed" style={{width:'250px'}}>SỐ TÀI KHOẢN</label>
                                         <div className="p-inputgroup">
-                                            <InputMask className="p-inputtext" id="niceNumber" mask="E0299999999" value={this.state.niceNumber} placeholder="Nhập số tài khoản" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
+                                            <InputMask className="p-inputtext" id="niceNumber" mask="E0200999999" value={this.state.niceNumber} placeholder="Nhập số tài khoản" onChange={(e) => this.setState({niceNumber: e.value})}></InputMask>
                                             <Button icon="pi pi-search" className="p-button-success" onClick={this.onCheckNiceNumberClick}/>
                                         </div>
                                         {/* <small id="niceNumber-help">{this.state.niceNumberMessage}</small> */}
