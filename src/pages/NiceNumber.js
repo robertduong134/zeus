@@ -80,8 +80,11 @@ export default class NiceNumber extends Component {
 
     validateSelectForm() {
         if (this.state.niceNumber === undefined || this.state.niceNumber === '') {
-            // this.setState({niceNumberMessage: 'Số tài khoản không được để trống!', niceNumberStatus: false})
             this.showError('Số tài khoản không được để trống!');
+            return false;
+        }
+        if (this.state.referralCode === undefined || this.state.referralCode === '') {
+            this.showError('Mã giới thiệu không được để trống!');
             return false;
         }
         return true;
@@ -89,7 +92,6 @@ export default class NiceNumber extends Component {
 
     validateContactForm() {
         if (this.state.name === undefined || this.state.name === '') {
-            // this.setState({nameMessage: 'Họ và tên không được để trống!', nameStatus: false})
             this.showError('Họ và tên không được để trống!');
             return false;
         }
@@ -130,10 +132,10 @@ export default class NiceNumber extends Component {
         if (!this.validateSelectForm()) {
             return;
         }else {
-            this.niceNumberService.check(this.state.niceNumber)
+            this.niceNumberService.check(this.state.niceNumber, this.state.referralCode)
             .then(response => {
-                const niceNumberStatus = response.body.data.status;
-                if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
+                const status = response.body.data.status;
+                if(status === 'NAN' || status === 'CANCELED'){
                     this.setState({niceNumberMessage: 'Số tài khoản chưa được đăng ký', niceNumberStatus: true})
                     this.showSuccess('Số tài khoản chưa được đăng ký!');
                 }else{
@@ -153,11 +155,11 @@ export default class NiceNumber extends Component {
         if (!this.validateSelectForm()) {
             return;
         }else {
-            this.niceNumberService.check(this.state.niceNumber)
+            this.niceNumberService.check(this.state.niceNumber, this.state.referralCode)
                             .then(response => {
-                                const niceNumberStatus = response.body.data.status;
-                                if(niceNumberStatus === 'NAN' || niceNumberStatus === 'CANCELED'){
-                                    this.setState({activeStep: 'contact', activeIndex: 1 });
+                                const status = response.body.data.status;
+                                if(status === 'NAN' || status === 'CANCELED'){
+                                    this.setState({activeStep: 'contact', activeIndex: 1, niceNumberStatus: true });
                                 }else{
                                     this.showWarn('Số tài khoản đã được đăng ký!');
                                     this.setState({niceNumberMessage: 'Số tài khoản đã được đăng ký', niceNumberStatus: false})

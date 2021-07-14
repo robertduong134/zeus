@@ -5,10 +5,11 @@ const API_URL = "http://103.74.113.47:1111/customer-service/api/v1/";
 
 export class NiceNumberService {
 
-    check(niceNumber){
+    check(niceNumber, refCode){
         return axios
                 .post(API_URL + "nice-number/check", {
-                    niceNumber
+                    niceNumber,
+                    refCode
                 })
                 .then(response => {
                     return response.data
