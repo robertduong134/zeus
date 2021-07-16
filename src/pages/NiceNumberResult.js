@@ -55,12 +55,18 @@ export default class NiceNumberResult extends Component {
     render() {
         return (
             <div className="container">
+                <div className="container_sidebar">
+                    <div className="logo">
+                        <img src="/assets/layout/images/logo-vetc.png" alt="babylon-layout" style={{cursor: 'pointer'}}/>
+                    </div>
+                </div>
+                <div className="container_main">
                 <div className="p-fluid">
                     <div className="p-field">
-                        <span><b>KẾT QUẢ NẠP TIỀN</b></span>
+                        <span><h1><b>KẾT QUẢ NẠP TIỀN</b></h1></span>
                         <br></br>
                         <br></br>
-                        <span>vnpTmnCode: {this.state.vnpTmnCode}</span>
+                        {/* <span>vnpTmnCode: {this.state.vnpTmnCode}</span>
                         <br></br>
                         <br></br>
                         <span>vnpAmount: {this.state.vnpAmount}</span>
@@ -77,17 +83,17 @@ export default class NiceNumberResult extends Component {
                         <br></br>
                         <span>vnpPayDate: {this.state.vnpPayDate}</span>
                         <br></br>
+                        <br></br> */}
+                        <span><h2>Mã giao dịch: {this.state.vnpTxnRef}</h2></span>
                         <br></br>
-                        <span>vnpOrderInfo: {this.state.vnpOrderInfo}</span>
+                        <br></br>
+                        <span><h2>Thông tin giao dịch: {this.state.vnpOrderInfo}</h2></span>
                         <br></br>
                         <br></br>
-                        <span>vnpTransactionNo: {this.state.vnpTransactionNo}</span>
+                        {/* <span>vnpTransactionNo: {this.state.vnpTransactionNo}</span>
                         <br></br>
                         <br></br>
                         <span>vnpResponseCode: {this.state.vnpResponseCode}</span>
-                        <br></br>
-                        <br></br>
-                        <span>vnpTxnRef: {this.state.vnpTxnRef}</span>
                         <br></br>
                         <br></br>
                         <span>vnpSecureHashType: {this.state.vnpSecureHashType}</span>
@@ -95,9 +101,13 @@ export default class NiceNumberResult extends Component {
                         <br></br>
                         <span>vnpSecureHash: {this.state.vnpSecureHash}</span>
                         <br></br>
+                        <br></br> */}
+                        <span><h2>Trạng thái giao dịch: {this.state.transactionStatus}</h2></span>
                         <br></br>
-                        <h1>Trạng thái giao dịch: {this.state.transactionStatus}</h1>
+                        <br></br>
+                        <span><h2><b>Lưu ý: Quý khách hàng vui lòng chụp lại màn hình này để lưu lại thông tin phục vụ cho việc kích hoạt tài khoản VETC</b></h2></span>
                     </div>
+                </div>
                 </div>
             </div>
             

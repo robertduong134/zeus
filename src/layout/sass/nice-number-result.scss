@@ -1,5 +1,139 @@
 .container {
+    display: flex;
     background-color: white;
     height: 100%;
-    width: 100%;
+    .container_sidebar {
+        width: 30%;
+        background-color: #f5f7f8;
+        padding: 24px 10%;
+		img {
+			height: 80px;
+		}
+        background: url("../images/extensions/background.jpg") center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .container_main {
+        /* Take the remaining width */
+        flex: 1;
+        /* Make it scrollable */
+        overflow: auto;
+        padding: 20px;
+        .steps {
+            .header {
+
+            }
+            .body {
+                margin-top: 80px;
+                height: 30vh; /* Magic here */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .body.select-number-form {
+                    display: none;
+                    .p-fluid {
+                        .p-field {
+                            >label {
+                                font-weight: bold;
+                            }
+                            .list-detail {
+                                border-radius: 4px;
+                                border: solid 1px #4daa5c;
+                                padding: 14px;
+                                margin-bottom: 10px; 
+                            }
+                        }
+                    }
+                }
+                .body.contact-form {
+                    display: none;
+                    .p-fluid {
+                        .p-field {
+                            >label {
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
+                .body.payment-form {
+                    display: none;
+                    .p-fluid {
+                        .p-field {
+                            .list-detail {
+                                border-radius: 4px;
+                                border: solid 1px #4daa5c;
+                                padding: 14px;
+                                margin-bottom: 10px; 
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                }
+                .body.active-step {
+                    display: block;
+                }
+            }
+            .footer{
+
+            }
+        }
+    }
 }
+@media screen and (max-width: 640px) {
+    .container {
+        .container_sidebar {
+            display: none;
+        }
+        .container_main {
+            .steps {
+                .header {
+                    .p-steps {
+                        height: 120px;
+                        >ul {
+                            flex-direction: column;
+                            height: 100%;
+                            .p-steps-item {
+                                flex-direction: column-reverse;
+                                align-items: flex-start;
+                                justify-content: center;
+                                &:before {
+                                    position: static;
+                                    left: auto;
+                                    top: auto;
+                                    margin-top: 0;
+                                    border-left: 1px solid var(--surface-d);
+                                    border-top: 0 none;
+                                    width: auto;
+                                    height: 100%;
+                                    margin-left: 1rem;
+                                }
+                                .p-menuitem-link {
+                                    flex-direction: row;
+                                    overflow: visible;
+                                    .p-steps-title {
+                                        margin: 0 .5rem 0;
+                                    }
+                                }
+                                &:last-child {
+                                    flex-grow: 0;
+                                    .p-menuitem-link {
+                                        padding: 0;
+                                    }
+                                    &:before {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .body {
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+}
+
+
+
