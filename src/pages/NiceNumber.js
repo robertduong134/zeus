@@ -9,6 +9,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import { InputMask } from 'primereact/inputmask';
 import { NiceNumberService } from '../service/NiceNumberService';
 import { Messages } from 'primereact/messages';
+import {preventDoubleClick} from '../helpers/utils';
 
 export default class NiceNumber extends Component {
 
@@ -210,7 +211,7 @@ export default class NiceNumber extends Component {
         }else{
             return <small className="p-info">{message}</small>
         }
-    };
+    }
 
     render() {
         return (
@@ -335,7 +336,7 @@ export default class NiceNumber extends Component {
                                     </div>
                                 </div> 
                                 <div className="p-field">
-                                    <Button className="p-button-success" label="ĐĂNG KÝ" disabled={this.state.disableRegisterButton} onClick={this.onRegisterClick}></Button>
+                                    <Button className="p-button-success" label="ĐĂNG KÝ" disabled={this.state.disableRegisterButton} onClick={() => preventDoubleClick(this.onRegisterClick)}></Button>
                                 </div>
                             </div>
                         </div>
